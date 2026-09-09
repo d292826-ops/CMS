@@ -23,7 +23,7 @@ export async function GET(request: Request) {
                     total += r.net_amount;
                     if (r.status === 'posted')
                         net += r.net_amount;
-                    yield [r.operation_at.replace('T', ' '), r.number, r.kind === 'return' ? 'Возврат' : 'Выдача', r.recipient_name, r.object_name, r.name, groupNames[r.group_name], r.qty / 1000 * (r.kind === 'return' ? -1 : 1), r.unit, r.price / 100, r.net_amount / 100, r.status === 'posted' ? r.net_amount / 100 : 0, r.status === 'posted' ? 'Проведён' : r.status === 'draft' ? 'Черновик' : 'Отменён', r.author_name, new URL('/?document=' + r.id + '&mode=' + c.workspace, request.url).href];
+                    yield [r.operation_at.replace('T', ' '), r.number, r.kind === 'return' ? 'Возврат' : 'Выдача', r.recipient_name, r.object_name, r.name, groupNames[r.group_name], r.qty / 1000 * (r.kind === 'return' ? -1 : 1), r.unit, r.price / 100, r.net_amount / 100, r.status === 'posted' ? r.net_amount / 100 : 0, r.status === 'posted' ? 'Проведён' : r.status === 'draft' ? 'Черновик' : 'Отменён', r.author_name, new URL('/?document=' + r.id + '&mode=' + (c.guest ? 'demo' : c.workspace), request.url).href];
                 }
                 offset += page.length;
                 if (page.length < 1000)

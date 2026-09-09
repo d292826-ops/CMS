@@ -2,25 +2,41 @@ import { db, one, all, stmt } from '@/db';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { initialize } from './seed';
 import { Role, localNow } from './domain';
+import { env } from 'cloudflare:workers';
 export class HttpError extends Error {
     constructor(public status: number, message: string) { super(message); }
 }
 export async function context(request: Request) {
     const user = await getChatGPTUser();
-    if (!user)
-        throw new HttpError(401, 'Войдите через ChatGPT');
-    await initialize();
-    let member = await one('SELECT * FROM users WHERE email=?', user.email.toLowerCase());
-    if (!member) {
+    const url = new URL(request.url);
+    const mode = url.searchParams.get('mode') || 'demo';
+    if (!['demo', 'live'].includes(mode))
+        throw new HttpError(400, 'Неизвестная база учёта');
+    let member = user ? await one('SELECT * FROM users WHERE email=?', user.email.toLowerCase()) : null;
+    // Only the configured Site owner may bootstrap the first administrator.
+    if (user && !member && env.CMS_OWNER_EMAIL && user.email.toLowerCase() === env.CMS_OWNER_EMAIL.toLowerCase()) {
         await db().prepare('INSERT INTO users(id,email,name,role) SELECT ?,?,?,? WHERE NOT EXISTS(SELECT 1 FROM users)').bind(user.userId, user.email.toLowerCase(), user.displayName, 'admin').run();
         member = await one('SELECT * FROM users WHERE email=?', user.email.toLowerCase());
     }
-    if (!member?.active)
-        throw new HttpError(403, 'Доступ не предоставлен. Обратитесь к администратору.');
-    const url = new URL(request.url), workspace = url.searchParams.get('mode') === 'live' ? 'live' : 'demo';
+    if (!user || !member?.active) {
+        const readViews = ['bootstrap', 'dashboard', 'fuel', 'budgets', 'report', 'journal', 'document'];
+        const publicRead = request.method === 'GET' && (url.pathname === '/api/export' ||
+            url.pathname === '/api/data' && readViews.includes(url.searchParams.get('view') || 'dashboard'));
+        if (mode === 'live' || !publicRead)
+            throw new HttpError(user ? 403 : 401, 'Для работы с данными необходим вход и доступ от администратора.');
+        // Never expose the editable member demo or live records to visitors.
+        const workspace = 'public-demo-' + localNow().slice(0, 7);
+        await initialize(workspace);
+        const role: Role = 'finance';
+        return { user: { userId: 'public-guest', email: '', displayName: 'Гость', fullName: null },
+            member: { id: 'public-guest', role, active: 1 }, role, workspace, guest: true,
+            settings: (await one('SELECT * FROM workspaces WHERE id=?', workspace))!, url };
+    }
+    await initialize();
+    const workspace = mode;
     const simulated = url.searchParams.get('role');
     const role: Role = workspace === 'demo' && member.role === 'admin' && ['admin', 'operator', 'finance'].includes(simulated || '') ? simulated : member.role;
-    return { user, member, role, workspace, settings: (await one('SELECT * FROM workspaces WHERE id=?', workspace))!, url };
+    return { user, member, role, workspace, guest: false, settings: (await one('SELECT * FROM workspaces WHERE id=?', workspace))!, url };
 }
 export type Context = Awaited<ReturnType<typeof context>>;
 export function permit(c: Context, roles: Role[]) { if (!roles.includes(c.role))
@@ -28,6 +44,7 @@ export function permit(c: Context, roles: Role[]) { if (!roles.includes(c.role))
 export function sameOrigin(request: Request) { const origin = request.headers.get('origin'); if (origin && origin !== new URL(request.url).origin)
     throw new HttpError(403, 'Недопустимый источник запроса'); }
 export async function transact(c: Context, key: string, action: string, entity: string, statements: D1PreparedStatement[], before: any, after: any, reason = '') {
+    if (c.guest) throw new HttpError(403, 'Демонстрация доступна только для просмотра.');
     if (!/^[a-zA-Z0-9_-]{8,120}$/.test(key || ''))
         throw new HttpError(400, 'Отсутствует ключ запроса');
     const receiptKey = c.workspace + ':' + c.user.userId + ':' + key;

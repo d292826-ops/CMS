@@ -8,7 +8,7 @@ export async function GET(request: Request) {
         const view = c.url.searchParams.get('view') || 'dashboard';
         if (view === 'bootstrap') {
             const [recipients, objects, resources] = await Promise.all(['recipients', 'objects', 'resources'].map(t => all(`SELECT * FROM ${t} WHERE workspace=? ORDER BY active DESC,name`, c.workspace)));
-            return json({ recipients, objects, resources, role: c.role, actualRole: c.member.role, user: { name: c.user.displayName, email: c.user.email, id: c.user.userId }, settings: c.settings, now: localNow(c.settings.timezone) });
+            return json({ recipients, objects, resources, guest: c.guest, role: c.role, actualRole: c.member.role, user: { name: c.user.displayName, email: c.user.email, id: c.user.userId }, settings: c.settings, now: localNow(c.settings.timezone) });
         }
         if (view === 'dashboard') {
             permit(c, ['admin', 'finance']);

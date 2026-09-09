@@ -4,6 +4,7 @@ import { one } from '@/db';
 export async function POST(request: Request) { try {
     sameOrigin(request);
     const c = await context(request);
+    if (c.guest) throw new HttpError(403, 'Демонстрация доступна только для просмотра.');
     if (Number(request.headers.get('content-length') || 0) > 500000)
         throw new HttpError(413, 'Запрос слишком большой');
     const b: any = await request.json();

@@ -4,14 +4,22 @@ import {readFileSync,readdirSync,writeFileSync,mkdirSync} from 'node:fs';
 import assert from 'node:assert/strict';
 const sqlite=new DatabaseSync(':memory:');sqlite.exec('PRAGMA foreign_keys=ON');for(const f of readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sqlite.exec(readFileSync('drizzle/'+f,'utf8'));
 class Statement{constructor(sql,args=[]){this.sql=sql;this.args=args}bind(...args){return new Statement(this.sql,args)}execute(){const s=sqlite.prepare(this.sql);if(/^\s*(SELECT|PRAGMA)/i.test(this.sql))return{results:s.all(...this.args),success:true,meta:{}};const r=s.run(...this.args);return{results:[],success:true,meta:{changes:Number(r.changes)}}}async all(){return this.execute()}async first(){return this.execute().results[0]??null}async run(){return this.execute()}}
-globalThis.__testEnv={DB:{prepare:s=>new Statement(s),batch:async statements=>{sqlite.exec('BEGIN IMMEDIATE');try{const result=statements.map(s=>s.execute());sqlite.exec('COMMIT');return result}catch(e){sqlite.exec('ROLLBACK');throw e}}}};
+globalThis.__testEnv={CMS_OWNER_EMAIL:'owner@example.test',DB:{prepare:s=>new Statement(s),batch:async statements=>{sqlite.exec('BEGIN IMMEDIATE');try{const result=statements.map(s=>s.execute());sqlite.exec('COMMIT');return result}catch(e){sqlite.exec('ROLLBACK');throw e}}}};
 globalThis.__testIdentity={id:'owner-test',email:'owner@example.test',name:'Тестовый администратор'};
 mkdirSync('.test-output',{recursive:true});
-await build({stdin:{contents:`export * from './lib/domain';export * from './lib/server';export * from './lib/mutations';export * from './lib/queries';export * from './lib/seed';export * from './lib/backup';export * from './lib/xlsx';export * from './lib/stream-xlsx';export {GET as getData} from './app/api/data/route';export {GET as getExport} from './app/api/export/route';export {POST as postMutation} from './app/api/mutate/route';`,resolveDir:process.cwd(),loader:'ts'},outfile:'.test-output/server.mjs',bundle:true,platform:'node',format:'esm',plugins:[{name:'test-runtime',setup(b){b.onResolve({filter:/^cloudflare:workers$/},()=>({path:'env',namespace:'test'}));b.onResolve({filter:/^next\/headers$/},()=>({path:'headers',namespace:'test'}));b.onResolve({filter:/^next\/navigation$/},()=>({path:'navigation',namespace:'test'}));b.onLoad({filter:/.*/,namespace:'test'},a=>({loader:'js',contents:a.path==='env'?'export const env=globalThis.__testEnv;':a.path==='navigation'?'export function redirect(path){throw new Error("REDIRECT "+path)}':'export async function headers(){const u=globalThis.__testIdentity;return new Headers(u?{"oai-authenticated-user-id":u.id,"oai-authenticated-user-email":u.email}:{});}'}))}}]});
+await build({stdin:{contents:`export * from './lib/domain';export * from './lib/server';export * from './lib/mutations';export * from './lib/queries';export * from './lib/seed';export * from './lib/backup';export * from './lib/xlsx';export * from './lib/stream-xlsx';export {GET as getData} from './app/api/data/route';export {GET as getExport} from './app/api/export/route';export {POST as postMutation} from './app/api/mutate/route';export {GET as getBackup} from './app/api/backup/route';`,resolveDir:process.cwd(),loader:'ts'},outfile:'.test-output/server.mjs',bundle:true,platform:'node',format:'esm',plugins:[{name:'test-runtime',setup(b){b.onResolve({filter:/^cloudflare:workers$/},()=>({path:'env',namespace:'test'}));b.onResolve({filter:/^next\/headers$/},()=>({path:'headers',namespace:'test'}));b.onResolve({filter:/^next\/navigation$/},()=>({path:'navigation',namespace:'test'}));b.onLoad({filter:/.*/,namespace:'test'},a=>({loader:'js',contents:a.path==='env'?'export const env=globalThis.__testEnv;':a.path==='navigation'?'export function redirect(path){throw new Error("REDIRECT "+path)}':'export async function headers(){const u=globalThis.__testIdentity;return new Headers(u?{"oai-authenticated-user-id":u.id,"oai-authenticated-user-email":u.email}:{});}'}))}}]});
 const m=await import('../.test-output/server.mjs');let passed=0;const check=(name,f)=>Promise.resolve().then(f).then(()=>{passed++;console.log('PASS '+name)});const now=m.localNow(),month=now.slice(0,7),range=m.periodRange('month',now);const ctx=async(extra='')=>m.context(new Request(`https://cms.test/api?mode=demo&from=${range[0]}&to=${range[1]}&period=month${extra}`));const key=()=>crypto.randomUUID();const request=(body,extra='')=>new Request('https://cms.test/api/mutate?mode=demo'+extra,{method:'POST',headers:{'content-type':'application/json','origin':'https://cms.test'},body:JSON.stringify(body)});
 await check('exact HALF_UP, precision rejection, quantity',()=>{assert.equal(m.lineAmount(1,500),1);assert.equal(m.lineAmount(3,500),2);assert.throws(()=>m.scaled('1.2345',3));assert.throws(()=>m.scaled('-1',2));assert.equal(m.scaled('12,34',2),1234)});
 await check('cumulative returns and cancelled zero-valued returns',()=>{const o={qty:5,price:500,amount:3};let q=0,a=0;const results=[];for(let i=0;i<5;i++){const v=m.returnAmount(o,q,a,1);results.push(v);q++;a+=v}assert.deepEqual(results,[1,0,1,0,1]);assert.equal(m.returnAmount(o,3,3,1),0);assert.equal(m.returnAmount(o,4,3,1),0);assert.throws(()=>m.returnAmount(o,5,3,1))});
 await check('Kamchatka midnight and Monday week boundaries',()=>{assert.equal(m.localNow('Asia/Kamchatka',new Date('2026-09-08T11:59:59Z')).slice(0,10),'2026-09-08');assert.equal(m.localNow('Asia/Kamchatka',new Date('2026-09-08T12:00:00Z')).slice(0,10),'2026-09-09');assert.deepEqual(m.periodRange('week','2026-09-09'),['2026-09-07','2026-09-13'])});
+await check('a stranger cannot claim the first administrator',async()=>{
+ globalThis.__testIdentity={id:'stranger',email:'stranger@example.test',name:'Stranger'};
+ const r=await m.getData(new Request('https://cms.test/api/data?view=bootstrap&role=admin'));
+ assert.equal(r.status,200);const b=await r.json();assert.equal(b.guest,true);assert.equal(b.role,'finance');
+ assert.equal(sqlite.prepare('SELECT COUNT(*) n FROM users').get().n,0);
+ const live=await m.getData(new Request('https://cms.test/api/data?mode=live&view=bootstrap'));assert.equal(live.status,403);
+ globalThis.__testIdentity={id:'owner-test',email:'owner@example.test',name:'Тестовый администратор'};
+});
 await check('demo reconciles with every TZ control total',async()=>{const c=await ctx();const d=await m.dashboard(c),b=await m.budgetReport(c);assert.equal(d.totals.total,4645000);assert.equal(d.totals.issues,6);assert.equal(d.totals.returns,1);assert.deepEqual(d.byObject.map(x=>[x.id,x.total]),[['o1',2520000],['o3',1425000],['o2',700000]]);assert.equal(b.rows.reduce((s,r)=>s+r.plan,0),4900000);assert.equal(b.rows.reduce((s,r)=>s+r.fact,0),4645000);assert.equal(d.fuel.find(r=>r.resource_id==='r4').issued,200000);assert.equal(d.fuel.find(r=>r.resource_id==='r5').issued,80000);assert.equal(d.fuel.find(r=>r.resource_id==='r6').issued,150000)});
 await check('partial budgets, zero budgets, hidden comparison',async()=>{assert.equal(m.budgetState(0,1).percent,null);assert.equal(m.budgetState(0,1).label,'Превышен');assert.equal(m.budgetState(100,80).label,'Близко к лимиту');assert.equal(m.budgetState(100,101).label,'Превышен');const hidden=await m.budgetReport(await ctx('&recipient=p1'));assert.equal(hidden.hidden,true);const year=await ctx();year.url.searchParams.set('from',month.slice(0,4)+'-01-01');year.url.searchParams.set('to',month.slice(0,4)+'-12-31');const b=await m.budgetReport(year);assert.equal(b.rows[0].complete,false)});
 await check('operator and financier restrictions are server-side',async()=>{const op=await ctx('&role=operator');await assert.rejects(()=>m.catalog(op,{table:'objects'}));await assert.rejects(()=>m.saveBudgets(op,{}));const response=await m.getData(new Request('https://cms.test/api?mode=demo&role=operator&view=budgets'));assert.equal(response.status,403);const f=await ctx('&role=finance');await assert.rejects(()=>m.cancelDocument(f,{id:'d2',reason:'test'}));await assert.rejects(()=>m.saveDocument(f,{}))});
@@ -27,4 +35,40 @@ await check('stale budget revision rejected',async()=>{const c1=await ctx(),c2=a
 await check('invalid fuel unit and used resource mutation blocked',async()=>{const c=await ctx();await assert.rejects(()=>m.catalog(c,{table:'resources',name:'Метан',code:'METH',group:'gas',unit:'шт.',price:'5',grade:'метан',key:key()}));const r=sqlite.prepare('SELECT * FROM resources WHERE id=?').get('r4');await assert.rejects(()=>m.catalog(c,{...r,table:'resources',price:'75',unit:'кг',key:key()}),/нельзя менять/)});
 await check('XLSX export is an OOXML ZIP and preserves filter',async()=>{const response=await m.getExport(new Request(`https://cms.test/api/export?mode=demo&from=${range[0]}&to=${range[1]}&status=posted`));assert.equal(response.status,200);const bytes=new Uint8Array(await response.arrayBuffer());assert.equal(bytes[0],0x50);assert.equal(bytes[1],0x4b);writeFileSync('.test-output/report.xlsx',bytes)});
 await check('backup restores into a clean schema without losing links',()=>{const restore=new DatabaseSync(':memory:');restore.exec('PRAGMA foreign_keys=ON');for(const f of readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())restore.exec(readFileSync('drizzle/'+f,'utf8'));restore.exec('BEGIN');for(const t of ['workspaces','users','recipients','objects','resources','documents','lines','budgets','audit','receipts']){for(const row of snapshot.tables[t]){const k=Object.keys(row);restore.prepare(`INSERT INTO "${t}" (${k.map(x=>'"'+x+'"').join(',')}) VALUES (${k.map(()=>'?').join(',')})`).run(...Object.values(row))}}restore.exec('COMMIT');assert.equal(restore.prepare('SELECT COUNT(*) n FROM documents').get().n,10);assert.equal(restore.prepare("SELECT SUM(CASE WHEN d.kind='return' THEN -l.amount ELSE l.amount END) total FROM documents d JOIN lines l ON l.document_id=d.id WHERE d.status='posted' AND substr(d.operation_at,1,7)=?").get(month).total,4645000);assert.deepEqual(restore.prepare('PRAGMA foreign_key_check').all(),[])});
+await check('anonymous demo loads all read views and exports with isolated examples',async()=>{
+ globalThis.__testIdentity=null;
+ const req=q=>new Request('https://cms.test/api/data?'+q);
+ const b=await (await m.getData(req('view=bootstrap&role=admin'))).json();
+ assert.equal(b.guest,true);assert.equal(b.role,'finance');assert.equal(b.user.email,'');
+ const workspace='public-demo-'+month;assert.equal(b.settings.id,workspace);
+ assert.equal(b.resources.find(r=>r.code==='М01').price,120000);
+ assert.notEqual(sqlite.prepare('SELECT price FROM resources WHERE id=?').get('r1').price,120000);
+ for(const view of ['dashboard','fuel','budgets','report','journal']){
+  const r=await m.getData(req('view='+view+'&from='+range[0]+'&to='+range[1]));assert.equal(r.status,200,view);
+  const data=await r.json();if(view==='dashboard')assert.equal(data.totals.total,4645000);
+ }
+ const doc=await m.getData(req('view=document&id='+encodeURIComponent(workspace+':d1')));assert.equal(doc.status,200);
+ const e=await m.getExport(new Request('https://cms.test/api/export?from='+range[0]+'&to='+range[1]));assert.equal(e.status,200);
+ const bytes=new Uint8Array(await e.arrayBuffer());assert.equal(bytes[0],0x50);assert.equal(bytes[1],0x4b);
+ assert.deepEqual(sqlite.prepare('PRAGMA foreign_key_check').all(),[]);
+});
+await check('anonymous cannot read private data, users, audit, backups or edit budgets',async()=>{
+ globalThis.__testIdentity=null;
+ for(const query of ['mode=live&view=bootstrap','mode=live&view=journal','mode=live&view=document&id=d1','view=users&role=admin','view=audit','view=budget-edit']){
+  const r=await m.getData(new Request('https://cms.test/api/data?'+query));assert.equal(r.status,401,query);
+ }
+ assert.equal((await m.getData(new Request('https://cms.test/api/data?view=document&id=d1'))).status,404);
+ assert.equal((await m.getExport(new Request('https://cms.test/api/export?mode=live'))).status,401);
+ assert.equal((await m.getBackup(new Request('https://cms.test/api/backup?mode=demo'))).status,401);
+ const before=sqlite.prepare('SELECT COUNT(*) n FROM users').get().n;
+ for(const action of ['catalog','document','preview','cancel','budget','user','settings']){
+  const r=await m.postMutation(request({action,key:key()}));assert.equal(r.status,401,action);
+ }
+ const c=await m.context(new Request('https://cms.test/api/data?view=bootstrap'));
+ await assert.rejects(()=>m.transact(c,key(),'budget','fake',[],null,null),/только для просмотра/);
+ assert.equal(sqlite.prepare('SELECT COUNT(*) n FROM users').get().n,before);
+ globalThis.__testIdentity={id:'owner-test',email:'owner@example.test',name:'Test'};
+ const live=await m.getData(new Request('https://cms.test/api/data?mode=live&view=bootstrap'));assert.equal(live.status,200);
+ assert.equal((await live.json()).guest,false);
+});
 console.log(`\n${passed} acceptance checks passed. SQLite test runtime; production load and browser QA not executed.`);
