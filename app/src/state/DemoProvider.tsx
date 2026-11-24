@@ -7,15 +7,18 @@ import { controlStorage, readControlCase, createControlDataset } from '../demo/c
 import type { ControlCase, DatasetId } from '../demo/control-cases.ts';
 import { loadDemoState, resetDemoState, selectDemoUser } from './storage.ts';
 import type { StoragePort } from './storage.ts';
+import { restoreBackup, withAutomaticBackups } from './backups.ts';
+import type { DemoBackup } from './backups.ts';
 
 interface DemoContextValue {
   state: DemoState | null; status: 'loading' | 'ready' | 'error' | 'cancelled'; error: string | null; slow: boolean;
   mode: ControlCase; retry(): void; refresh(confirmParticipantChange?:boolean): Result<DemoState>; cancelLoad(): void; selectUser(id: string): boolean; reset(): boolean; clearError(): void;
   storage: StoragePort; accept(result: Result<DemoState>): boolean;
+  backupStorage: StoragePort; restore(copy: DemoBackup, expectedRaw: string | null): Result<DemoState>;
   loadDataset(id: DatasetId, keepParticipant?:boolean): boolean;
 }
 const DemoContext = createContext<DemoContextValue | null>(null);
-const browserStorage: StoragePort = { getItem: key => window.localStorage.getItem(key), setItem: (key, value) => window.localStorage.setItem(key, value) };
+const browserStorage: StoragePort = withAutomaticBackups({ getItem: key => window.localStorage.getItem(key), setItem: (key, value) => window.localStorage.setItem(key, value) });
 export function DemoProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<DemoState | null>(null);
   const [status, setStatus] = useState<DemoContextValue['status']>('loading');
@@ -43,6 +46,15 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   };
   const value: DemoContextValue = {
     state, status, error, slow, mode, storage: port, accept, retry: load,
+    backupStorage: browserStorage,
+    restore: (copy, expectedRaw) => {
+      const result = restoreBackup(browserStorage, copy, expectedRaw);
+      if (!result.ok) return result;
+      sequence.current++; if (timer.current !== null) clearTimeout(timer.current);
+      setSlow(false); setMode('normal'); accept(result);
+      window.history.replaceState(null, '', window.location.pathname + '#/');
+      window.dispatchEvent(new HashChangeEvent('hashchange')); return result;
+    },
     refresh: (confirmParticipantChange=false) => {
       const result=loadDemoState(port,createSeedState);
       if(!result.ok){setError(result.message);return result;}

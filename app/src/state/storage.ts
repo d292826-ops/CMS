@@ -24,7 +24,7 @@ export function saveDemoState(storage: StoragePort, candidate: DemoState, expect
     const checked = validateDemoState(next); if (!checked.ok) return checked;
     storage.setItem(STORAGE_KEY, JSON.stringify(next));
     log('INFO', 'STATE_SAVED'); return success(next);
-  } catch { log('ERROR', 'STATE_WRITE_FAILED'); return failure('STORAGE_WRITE', 'Не удалось сохранить изменения в этом браузере. Прежние данные не изменены. Повторите попытку'); }
+  } catch (error) { log('ERROR', 'STATE_WRITE_FAILED'); return failure('STORAGE_WRITE', error instanceof Error && error.name === 'DemoBackupError' ? error.message : 'Не удалось сохранить изменения в этом браузере. Прежние данные не изменены. Повторите попытку'); }
 }
 export function selectDemoUser(storage: StoragePort, state: DemoState, userId: string): Result<DemoState> {
   if (!state.data.users.some(user => user.id === userId && user.is_active)) return failure('USER_NOT_FOUND', 'Участник не найден в демонстрации');
@@ -38,5 +38,5 @@ export function resetDemoState(storage: StoragePort, seed: () => DemoState, conf
     const next = { ...seed(), revision: previousRevision + 1, saved_at: new Date().toISOString() };
     const checked = validateDemoState(next); if (!checked.ok) return checked;
     storage.setItem(STORAGE_KEY, JSON.stringify(next)); log('INFO', 'STATE_RESET'); return success(next);
-  } catch { log('ERROR', 'STATE_RESET_FAILED'); return failure('STORAGE_WRITE', 'Не удалось восстановить набор. Прежние сведения не удалены. Проверьте доступ к хранилищу и повторите'); }
+  } catch (error) { log('ERROR', 'STATE_RESET_FAILED'); return failure('STORAGE_WRITE', error instanceof Error && error.name === 'DemoBackupError' ? error.message : 'Не удалось восстановить набор. Прежние сведения не удалены. Проверьте доступ к хранилищу и повторите'); }
 }

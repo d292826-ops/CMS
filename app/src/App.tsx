@@ -22,6 +22,7 @@ import {useRequestDraft} from './state/RequestDraft.tsx';
 import {useIssueDraft} from './state/IssueDraft.tsx';
 import type {DatasetId} from './demo/control-cases.ts';
 import {CONTROL_CASES,DATASETS} from './demo/control-cases.ts';
+import {BackupPanel} from './ui/BackupPanel.tsx';
 function CurrentScreen({route}:{route:Route}){
  const demo=useDemo();const id=decodeId(route.path.split('/')[2]??'');
  if(!demo.state?.selected_user_id)return <AccessDeniedPage/>;
@@ -59,6 +60,7 @@ export function App(){
   {demo.status==='loading'&&<StateMessage title="Загружаем демонстрационные данные"><p>{demo.slow?'Загрузка длится больше 10 секунд. Можно повторить или отменить ожидание.':'Проверяем сохранённое состояние этого браузера…'}</p>{demo.slow&&<div className="actions"><Button onClick={demo.retry}>Повторить</Button><Button variant="secondary" onClick={demo.cancelLoad}>Отменить ожидание</Button></div>}</StateMessage>}
   {demo.status==='cancelled'&&<StateMessage title="Ожидание отменено" actions={<Button onClick={demo.retry}>Повторить загрузку</Button>}><p>Поздний ответ отменённой попытки не изменит данные.</p></StateMessage>}
   {ready&&(route.path==='/'?<StartPage chooseUser={chooseUser} reset={()=>setConfirmation('reset')} draft={draft} setDraft={setDraft}/>:<CurrentScreen route={route}/>)}
+  {route.path==='/'&&demo.status!=='loading'&&<BackupPanel onRestored={()=>{setDraft('');requestDraft.clear();issueDraft.clear();getUnsavedWork('role-change').forEach(work=>work.discard());}}/>}
   {ready&&route.path==='/'&&<details className="control-panel"><summary>Учебные примеры</summary><label htmlFor="dataset">Подготовленный набор</label><select id="dataset" value={dataset} onChange={e=>setDataset(e.target.value as DatasetId)}>{DATASETS.map(i=><option key={i.id} value={i.id}>{i.label}</option>)}</select><Button variant="secondary" onClick={()=>setConfirmation('dataset')}>Загрузить учебный пример</Button></details>}
   {import.meta.env.DEV&&<details className="control-panel"><summary>Примеры ошибок и загрузки</summary><label htmlFor="test-case">Контрольный пример</label><select id="test-case" value={testCase} onChange={e=>setTestCase(e.target.value)}>{CONTROL_CASES.map(i=><option value={i.id} key={i.id}>{i.label}</option>)}</select><Button variant="secondary" onClick={()=>setConfirmation('case')}>Открыть контрольный пример</Button></details>}
   {pendingNavigation&&<ConfirmDialog title="Уйти с незавершённой формы?" confirmLabel="Отменить ввод" cancelLabel="Остаться" onCancel={()=>setPendingNavigation(null)} onConfirm={()=>{const proceed=pendingNavigation;setPendingNavigation(null);proceed();}}><p>Несохранённый ввод будет отменён. Уже сохранённые операции не изменятся.</p></ConfirmDialog>}
