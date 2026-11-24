@@ -1,0 +1,3 @@
+export function formatMoney(value: number | null | undefined): string { return value === undefined ? 'Не применяется' : value === null ? 'Нет данных' : !Number.isSafeInteger(value) ? 'Ошибка данных' : new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2 }).format(value / 100); }
+export function formatQuantity(value: string | null): string { return value === null ? 'Нет данных' : value.replace('.', ','); }
+export function formatDate(value: string): string { return new Intl.DateTimeFormat('ru-RU', { timeZone: 'Asia/Kamchatka', day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(value)); }

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Учебный сайт отдела снабжения: заявки на запчасти, складские документы и разбор расходов машины." />
+    <title>Отдел снабжения</title>
+    <style>.boot{font:16px/1.5 system-ui,sans-serif;color:#182230;margin:10vh auto;padding:24px;max-width:700px}.boot button{font:inherit;min-height:44px;margin:8px 8px 0 0;padding:10px 16px;border:1px solid #8a94a6;border-radius:6px;background:#fff;color:#1d4ed8}</style>
+  </head>
+  <body>
+    <div id="root"><main class="boot" aria-live="polite"><h1>Отдел снабжения</h1><p>Загружаем сайт…</p></main></div>
+    <script>
+      (() => {
+        const root = document.getElementById('root');
+        const timeout = setTimeout(() => {
+          if (root.dataset.ready) return;
+          const box = root.querySelector('main');
+          box.querySelector('p').textContent = 'Загрузка занимает больше времени. Можно повторить или отменить ожидание.';
+          const retry = document.createElement('button'); retry.textContent = 'Повторить'; retry.onclick = () => location.reload();
+          const cancel = document.createElement('button'); cancel.textContent = 'Отменить ожидание';
+          cancel.onclick = () => { root.dataset.cancelled = 'true'; box.querySelector('p').textContent = 'Ожидание отменено. Чтобы открыть сайт, нажмите «Повторить».'; cancel.remove(); };
+          box.append(retry, cancel);
+        }, 10000);
+        document.addEventListener('demo:ready', () => clearTimeout(timeout), { once: true });
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

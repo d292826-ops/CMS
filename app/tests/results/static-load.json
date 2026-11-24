@@ -1,0 +1,266 @@
+{
+  "base": "http://127.0.0.1:4173/",
+  "visitors": [
+    {
+      "visitor": 1,
+      "ms": 24,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 2,
+      "ms": 24,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 3,
+      "ms": 24,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 4,
+      "ms": 23,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 5,
+      "ms": 23,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 6,
+      "ms": 24,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 7,
+      "ms": 24,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 8,
+      "ms": 23,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 9,
+      "ms": 23,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    },
+    {
+      "visitor": 10,
+      "ms": 23,
+      "responses": [
+        {
+          "path": "/",
+          "status": 200,
+          "bytes": 2101
+        },
+        {
+          "path": "/assets/index-CARvz1r3.js",
+          "status": 200,
+          "bytes": 335399
+        },
+        {
+          "path": "/assets/index-CjIk5mlu.css",
+          "status": 200,
+          "bytes": 16930
+        },
+        {
+          "path": "/fonts/InterVariable.woff2",
+          "status": 200,
+          "bytes": 352240
+        }
+      ]
+    }
+  ],
+  "scope": "10 одновременных загрузок статических ресурсов; общей серверной БД нет"
+}

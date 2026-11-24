@@ -1,0 +1,88 @@
+{
+  "base": "http://127.0.0.1:4173",
+  "count": 10,
+  "elapsedMs": 2538,
+  "results": [
+    {
+      "visitor": 1,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 2,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 3,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 4,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 5,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 6,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 7,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 8,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 9,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    },
+    {
+      "visitor": 10,
+      "requests": 2,
+      "issues": 1,
+      "stockDelta": -2,
+      "expenseMinor": 100000,
+      "exceptions": 0
+    }
+  ],
+  "scope": "10 независимых браузерных контекстов; общая БД и общий склад не проверялись"
+}

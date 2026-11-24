@@ -1,0 +1,9 @@
+.print-copy{display:none}.print-preview{display:block;border:1px solid var(--border);padding:24px;margin-top:24px;background:#fff}.print-copy .data-list{grid-template-columns:180px 1fr}.print-copy h2{font-size:22px}
+@media print{
+ @page{size:A4;margin:15mm}
+ html,body,.app-shell,.workspace,.main-content{background:white!important;color:#182230!important;display:block!important;width:auto!important;min-height:0!important;padding:0!important;margin:0!important}
+ .topbar,.sidebar,.footer,.main-content>*,.control-banner,dialog{display:none!important}
+ .main-content>.print-copy{display:block!important;margin:0!important;border:0!important;padding:0!important;font-size:12pt;line-height:1.45}
+ .print-copy *{color:#182230!important;box-shadow:none!important;overflow:visible!important;max-width:100%}
+ .print-copy button,.print-copy .actions{display:none!important}.print-copy h2,.print-copy h3{break-after:avoid}.print-copy dt,.print-copy dd,.print-copy li{break-inside:avoid}.print-copy dd{overflow-wrap:anywhere}.print-copy .data-list{display:grid!important;grid-template-columns:40mm 1fr;gap:3mm 5mm}.print-copy .coverage-warning{border:1px solid #8a94a6;padding:3mm}
+}

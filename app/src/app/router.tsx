@@ -1,0 +1,8 @@
+import {useEffect,useRef,useState} from 'react';
+import {requestNavigation,safeInternalPath} from './navigation.ts';
+export interface Route {path:string;query:URLSearchParams}
+export function parseRoute(hash:string):Route{const value=hash.replace(/^#/,'')||'/';const split=value.indexOf('?');return {path:split<0?value:value.slice(0,split),query:new URLSearchParams(split<0?'':value.slice(split+1))};}
+let approved:string|null=null;
+function commit(to:string,replace:boolean){approved='#'+to;if(replace){window.history.replaceState(null,'',window.location.pathname+window.location.search+'#'+to);window.dispatchEvent(new HashChangeEvent('hashchange'));}else if(window.location.hash==='#'+to){window.dispatchEvent(new HashChangeEvent('hashchange'));}else window.location.hash=to;}
+export function navigate(to:string,replace=false){if(safeInternalPath(to,'')!==to||!to)return;if(replace)commit(to,true);else requestNavigation(to,()=>commit(to,false));}
+export function useRoute():Route{const [route,setRoute]=useState(()=>parseRoute(window.location.hash));const current=useRef(window.location.hash||'#/');useEffect(()=>{const update=()=>{const hash=window.location.hash||'#/';const apply=()=>{current.current=hash;setRoute(parseRoute(hash));};if(approved===hash){approved=null;apply();return;}if(hash===current.current){apply();return;}const to=hash.slice(1);window.history.replaceState(null,'',window.location.pathname+window.location.search+current.current);requestNavigation(to,()=>{commit(to,true);});};window.addEventListener('hashchange',update);return()=>window.removeEventListener('hashchange',update);},[]);return route;}

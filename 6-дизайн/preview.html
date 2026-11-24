@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Визуальная проверка дизайн-системы сайта «Отдел снабжения»: цвета, типографика, кнопки, карточки, формы и пример рабочего экрана.">
+<title>Отдел снабжения — дизайн-система</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root{
+ --color-background:#FFFFFF;
+ --color-text:#182230;
+ --color-muted:#526174;
+ --color-accent:#1D4ED8;
+ --color-error:#B42318;
+ --color-success:#15803D;
+ --color-border:#8A94A6;
+ --space-xs:4px;--space-sm:8px;--space-md:16px;--space-lg:24px;--space-xl:32px;
+ --radius-button:6px;--radius-card:8px;--radius-input:6px;
+ --font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ --font-h1:1.75rem;--line-h1:2.25rem;
+ --font-h2:1.375rem;--line-h2:1.875rem;
+ --font-h3:1.125rem;--line-h3:1.625rem;
+ --font-body:1rem;--line-body:1.5rem;
+ --font-button:.9375rem;--line-button:1.25rem;
+ --font-label:.875rem;--line-label:1.25rem;
+ --motion-duration:120ms;
+ --border-quiet:rgb(138 148 166 / 25%);
+ --surface-quiet:rgb(24 34 48 / 3%);
+ --accent-quiet:rgb(29 78 216 / 5%);
+ --accent-hover:#1b48c7;
+ --error-quiet:rgb(180 35 24 / 4%);
+ --success-quiet:rgb(21 128 61 / 4%);
+ color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:24px}
+body{margin:0;background:var(--color-background);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-body);line-height:var(--line-body);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit}
+button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:disabled{cursor:default;opacity:.5}
+a{color:var(--color-accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+h1,.type-h1{font-size:var(--font-h1);line-height:var(--line-h1);font-weight:600;letter-spacing:-.6px}
+h2,.type-h2{font-size:var(--font-h2);line-height:var(--line-h2);font-weight:600;letter-spacing:-.3px}
+h3,.type-h3{font-size:var(--font-h3);line-height:var(--line-h3);font-weight:600}
+.type-body{font-size:var(--font-body);line-height:var(--line-body);font-weight:400}
+.type-button{font-size:var(--font-button);line-height:var(--line-button);font-weight:600}
+.type-label{font-size:var(--font-label);line-height:var(--line-label);font-weight:500}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem;line-height:1.5}
+strong{font-weight:600}
+button,a{touch-action:manipulation}
+.icon{display:inline-block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:middle}
+.icon-sprite{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.page{max-width:1184px;margin:0 auto;padding:0 var(--space-xl)}
+.page-header{padding:var(--space-xl) 0 var(--space-lg);border-bottom:1px solid var(--border-quiet)}
+.header-top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);margin-bottom:var(--space-xl)}
+.wordmark{display:flex;align-items:center;gap:var(--space-sm);font-size:var(--font-label);font-weight:600}
+.wordmark .icon{color:var(--color-accent)}
+.preview-label{display:inline-block;border:1px solid var(--border-quiet);border-radius:var(--radius-button);padding:5px 9px;font-size:var(--font-label);line-height:var(--line-label);color:var(--color-muted)}
+.lead{max-width:780px;margin-top:12px;color:var(--color-muted)}
+.header-details{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:var(--space-md);font-size:var(--font-label);color:var(--color-muted)}
+.section-nav{display:flex;flex-wrap:wrap;gap:4px 18px;padding-top:var(--space-lg)}
+.section-nav a{display:inline-flex;align-items:center;min-height:36px;text-decoration:none;font-size:var(--font-label);color:var(--color-muted)}
+.section-nav a:hover{color:var(--color-accent);text-decoration:underline}
+.design-section{padding:40px 0;border-bottom:1px solid var(--border-quiet);scroll-margin-top:24px}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-md);margin-bottom:var(--space-lg)}
+.section-caption{font-size:var(--font-label);line-height:var(--line-label);color:var(--color-muted)}
+.section-intro{margin-top:-12px;margin-bottom:var(--space-lg);max-width:840px;color:var(--color-muted);font-size:var(--font-label)}
+.palette-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--space-lg)}
+.swatch-item{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.swatch{width:60px;height:60px;border:1px solid var(--border-quiet);border-radius:var(--radius-card)}
+.swatch-item strong{font-size:var(--font-label);line-height:var(--line-label)}
+.swatch-item code{color:var(--color-muted)}
+.section-note{margin-top:var(--space-lg);font-size:var(--font-label);color:var(--color-muted);max-width:900px}
+.type-list{border-top:1px solid var(--border-quiet)}
+.type-row{display:grid;grid-template-columns:230px minmax(0,1fr);gap:var(--space-lg);padding:20px 0;border-bottom:1px solid var(--border-quiet);align-items:center}
+.type-meta{display:flex;flex-direction:column;gap:4px;font-size:var(--font-label);color:var(--color-muted)}
+.type-meta code{font-weight:600;color:var(--color-text)}
+.numeric-example{display:flex;flex-wrap:wrap;gap:var(--space-xl);font-variant-numeric:tabular-nums;margin-top:var(--space-lg)}
+.numeric-example span{display:flex;flex-direction:column;gap:4px;font-size:var(--font-label);color:var(--color-muted)}
+.numeric-example strong{font-size:var(--font-h3);line-height:var(--line-h3);color:var(--color-text)}
+.button-board{display:grid;grid-template-columns:150px repeat(3,minmax(0,1fr));gap:var(--space-md);align-items:center}
+.board-col-label,.board-row-label{font-size:var(--font-label);color:var(--color-muted)}
+.button-cell{display:flex;align-items:center;min-height:58px}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:var(--space-sm);min-height:44px;max-width:100%;padding:10px 16px;border:1px solid var(--color-border);border-radius:var(--radius-button);background:var(--color-background);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-button);line-height:var(--line-button);font-weight:600;text-align:center;text-decoration:none;box-shadow:none;transform:translateY(0);transition:background-color var(--motion-duration) ease-out,box-shadow var(--motion-duration) ease-out,transform var(--motion-duration) ease-out}
+.btn-primary{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-background)}
+.btn-secondary{background:var(--color-background);border-color:var(--color-border);color:var(--color-text)}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--color-accent)}
+.btn:hover:not(:disabled),.btn.is-hover{transform:translateY(-1px);box-shadow:0 2px 4px rgb(29 78 216 / 12%)}
+.btn-primary:hover:not(:disabled),.btn-primary.is-hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-secondary:hover:not(:disabled),.btn-secondary.is-hover,.btn-ghost:hover:not(:disabled),.btn-ghost.is-hover{background:var(--accent-quiet)}
+.action-row{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center}
+.example-status{min-height:20px;margin-top:var(--space-md);font-size:var(--font-label);color:var(--color-muted)}
+.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-lg)}
+.card{padding:var(--space-lg);border:1px solid var(--border-quiet);border-radius:var(--radius-card);background:var(--color-background);box-shadow:none;min-width:0}
+.card-selected{border-color:var(--color-accent);background:var(--accent-quiet)}
+.card-success{border-color:var(--color-success)}
+.card-eyebrow{font-size:var(--font-label);line-height:var(--line-label);color:var(--color-muted);margin-bottom:var(--space-md)}
+.card h3{margin-bottom:var(--space-sm)}
+.card-copy{color:var(--color-muted);font-size:var(--font-body);line-height:var(--line-body)}
+.card .action-row{margin-top:var(--space-lg)}
+.card-status{display:flex;align-items:center;gap:var(--space-sm);font-size:var(--font-label);color:var(--color-success);margin-top:var(--space-md)}
+.forms-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-xl)}
+.specimen-heading{margin-bottom:var(--space-lg);min-height:68px}
+.specimen-heading p{font-size:var(--font-label);color:var(--color-muted);margin-top:5px}
+.field{display:flex;flex-direction:column;gap:var(--space-sm);min-width:0;margin-bottom:var(--space-lg)}
+.field:last-child{margin-bottom:0}
+.field label{font-size:var(--font-label);line-height:var(--line-label);font-weight:500}
+.control{display:block;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--color-border);border-radius:var(--radius-input);background:var(--color-background);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-body);line-height:var(--line-body);box-shadow:none}
+.control::placeholder{color:var(--color-muted);opacity:1}
+.control:focus-visible,.control.show-focus{border-color:var(--color-accent);outline:2px solid var(--color-accent);outline-offset:2px}
+.control.has-error{border-color:var(--color-error)}
+.control.has-error:focus-visible{border-color:var(--color-error);outline-color:var(--color-error)}
+.textarea{min-height:112px;resize:vertical}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;padding-right:38px}
+.select-wrap:after{content:"";position:absolute;right:16px;top:18px;width:7px;height:7px;border-right:1.5px solid var(--color-muted);border-bottom:1.5px solid var(--color-muted);transform:rotate(45deg);pointer-events:none}
+.field-hint,.field-error{font-size:var(--font-label);line-height:var(--line-label)}
+.field-hint{color:var(--color-muted)}
+.field-error{color:var(--color-error)}
+.radius-grid{display:flex;flex-wrap:wrap;gap:40px}
+.radius-item{display:flex;flex-direction:column;gap:var(--space-sm)}
+.radius-block{width:84px;height:84px;border:2px solid var(--color-accent);background:var(--accent-quiet)}
+.radius-item strong{font-size:var(--font-label)}
+.radius-item code{color:var(--color-muted)}
+.spacing-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-lg)}
+.spacing-stage{height:56px;position:relative;max-width:130px;margin-bottom:var(--space-sm);border-bottom:1px dashed var(--color-border)}
+.spacing-stage span{position:absolute;left:0;bottom:12px;display:block;height:12px;border-radius:2px;background:var(--color-accent)}
+.spacing-item>div:last-child{display:flex;gap:12px;align-items:baseline}
+.spacing-item strong{font-size:var(--font-label)}
+.spacing-item code{color:var(--color-muted)}
+.icon-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-md)}
+.icon-specimen{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px 0}
+.icon-specimen .icon{color:var(--color-text)}
+.icon-specimen span{font-size:var(--font-label)}
+.icon-specimen code{font-size:.75rem;color:var(--color-muted);overflow-wrap:anywhere}
+.motion-example{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-lg);padding:var(--space-lg);border:1px solid var(--border-quiet);border-radius:var(--radius-card)}
+.motion-copy{max-width:720px}
+.motion-copy p{margin-top:var(--space-xs);color:var(--color-muted);font-size:var(--font-label)}
+.copy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-md)}
+.message-example{padding:20px;border:1px solid var(--border-quiet);border-radius:var(--radius-card);font-size:var(--font-label)}
+.message-example h3{font-size:var(--font-body);line-height:var(--line-body);margin-bottom:var(--space-sm)}
+.message-example p{color:var(--color-muted)}
+.message-error{border-color:var(--color-error);background:var(--error-quiet)}
+.message-error h3{color:var(--color-error)}
+.message-success{border-color:var(--color-success);background:var(--success-quiet)}
+.message-success h3{color:var(--color-success)}
+.tone-summary{max-width:860px;margin-bottom:var(--space-lg)}
+.tone-summary strong{display:block;margin-bottom:var(--space-sm)}
+.screen-shell{border:1px solid var(--border-quiet);border-radius:var(--radius-card);overflow:hidden}
+.screen-header{display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);padding:20px 24px;border-bottom:1px solid var(--border-quiet)}
+.screen-header strong{display:flex;align-items:center;gap:var(--space-sm);font-size:var(--font-body)}
+.screen-header span{font-size:var(--font-label);color:var(--color-muted)}
+.screen-body{padding:var(--space-lg)}
+.screen-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-lg);margin-bottom:var(--space-lg)}
+.screen-title-row h3{font-size:var(--font-h2);line-height:var(--line-h2)}
+.screen-title-row p{font-size:var(--font-label);color:var(--color-muted);margin-top:var(--space-sm)}
+.feature-card .icon{color:var(--color-accent);margin-bottom:var(--space-md)}
+.feature-card h3{font-size:var(--font-h3);line-height:var(--line-h3)}
+.feedback{margin-top:var(--space-xl);padding-top:var(--space-lg);border-top:1px solid var(--border-quiet)}
+.feedback-heading{margin-bottom:var(--space-lg)}
+.feedback-heading p{font-size:var(--font-label);color:var(--color-muted);margin-top:var(--space-sm)}
+.feedback-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-lg)}
+.feedback-full{grid-column:1/-1}
+.feedback-grid .field{margin-bottom:0}
+.feedback .action-row{margin-top:var(--space-lg)}
+.feedback-status{margin-top:var(--space-md);font-size:var(--font-label);min-height:20px}
+.feedback-status.is-error{color:var(--color-error)}
+.feedback-status.is-success{color:var(--color-success)}
+.page-footer{padding:var(--space-lg) 0 40px;color:var(--color-muted);font-size:var(--font-label)}
+dialog{width:min(520px,calc(100% - 32px));max-height:calc(100% - 40px);overflow:auto;margin:auto;padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--color-background);color:var(--color-text);font-family:var(--font-family)}
+dialog::backdrop{background:rgb(24 34 48 / 32%)}
+dialog h2{font-size:var(--font-h2);line-height:var(--line-h2);margin-bottom:var(--space-md)}
+dialog p{margin-bottom:var(--space-lg);color:var(--color-muted)}
+dialog .action-row{justify-content:flex-end}
+[hidden]{display:none!important}
+@media(max-width:1000px){.palette-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.button-board{grid-template-columns:120px repeat(3,minmax(0,1fr));gap:12px}.card-grid{gap:16px}.card{padding:20px}.forms-grid{gap:24px}.type-row{grid-template-columns:190px minmax(0,1fr)}.screen-title-row{flex-direction:column;gap:16px}}
+@media(max-width:760px){.page{padding:0 var(--space-lg)}.header-top{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:24px}.design-section{padding:32px 0}.section-head{align-items:flex-start;flex-direction:column;gap:6px}.palette-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}.type-row{grid-template-columns:1fr;gap:12px}.type-meta{flex-direction:row;flex-wrap:wrap;gap:6px 16px}.button-board{grid-template-columns:100px minmax(0,1fr);gap:12px}.button-board .board-col-label{display:none}.button-cell{min-height:52px}.button-cell .btn:before{content:attr(data-kind);font-size:.75rem;font-weight:400;opacity:.8;margin-right:4px}.board-row-label{grid-column:1/-1;border-bottom:1px solid var(--border-quiet);padding-bottom:8px;margin-top:8px}.card-grid,.forms-grid{grid-template-columns:1fr}.card{padding:var(--space-lg)}.specimen-heading{min-height:0}.form-specimen+.form-specimen{padding-top:24px;border-top:1px solid var(--border-quiet)}.copy-grid{grid-template-columns:1fr}.icon-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.spacing-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.screen-header{padding:16px;align-items:flex-start;flex-direction:column;gap:6px}.screen-body{padding:var(--space-md)}.feedback-grid{grid-template-columns:1fr}.feedback-full{grid-column:auto}.screen-title-row .action-row{width:100%}.numeric-example{gap:24px}.section-nav a{min-height:44px}.button-cell{grid-column:1/-1}.button-cell .btn{min-width:210px}}
+@media(max-width:380px){.page{padding:0 var(--space-md)}.palette-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spacing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.icon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.radius-grid{gap:24px}.button-cell .btn{min-width:0}.action-row .btn{white-space:normal}.header-details{gap:8px 12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.btn:hover:not(:disabled),.btn.is-hover{transform:none}}
+@media print{.section-nav{display:none}.page{max-width:none;padding:0}.design-section{break-inside:avoid}.control{print-color-adjust:exact}.swatch,.btn{print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<defs>
+<symbol id="icon-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" /></symbol>
+<symbol id="icon-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  <path d="M15 18H9" />
+  <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  <circle cx="17" cy="18" r="2" />
+  <circle cx="7" cy="18" r="2" /></symbol>
+<symbol id="icon-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+  <path d="M12 22V12" />
+  <polyline points="3.29 7 12 12 20.71 7" />
+  <path d="m7.5 4.27 9 5.15" /></symbol>
+<symbol id="icon-clipboard-list" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="M12 11h4" />
+  <path d="M12 16h4" />
+  <path d="M8 11h.01" />
+  <path d="M8 16h.01" /></symbol>
+<symbol id="icon-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="m16 9-5.5 5.5L8 12" /></symbol>
+<symbol id="icon-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+  <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+  <rect x="6" y="14" width="12" height="8" rx="1" /></symbol>
+</defs>
+</svg>
+<div class="page">
+<header class="page-header">
+ <div class="header-top"><div class="wordmark"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-package"></use></svg><span>Отдел снабжения</span></div><span class="preview-label">Основной вариант · визуальная проверка</span></div>
+ <h1>Дизайн-система</h1>
+ <p class="lead">Понятные заявки, аккуратные документы и читаемые цифры. Все компоненты рабочего сайта — в одном месте, чтобы проверить их вместе.</p>
+ <div class="header-details"><span>Inter</span><span>Сетка 4 px</span><span>Светлый фон</span><span>Минимум движения</span></div>
+ <nav class="section-nav" aria-label="Разделы дизайн-системы"><a href="#palette">Палитра</a><a href="#typography">Типографика</a><a href="#buttons">Кнопки</a><a href="#cards">Карточки</a><a href="#forms">Формы</a><a href="#radii">Радиусы</a><a href="#spacing">Отступы</a><a href="#icons">Иконки</a><a href="#motion">Переходы</a><a href="#tone">Тексты</a><a href="#screen">Образец экрана</a></nav>
+</header>
+<main>
+<section class="design-section" id="palette" aria-labelledby="palette-title">
+ <div class="section-head"><h2 id="palette-title">Палитра</h2><span class="section-caption">Семь основных цветов</span></div>
+ <div class="palette-grid"><div class="swatch-item"><div class="swatch" style="background:var(--color-background)" aria-label="Фон #FFFFFF"></div><strong>Фон</strong><code>#FFFFFF</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-text)" aria-label="Основной текст #182230"></div><strong>Основной текст</strong><code>#182230</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-muted)" aria-label="Приглушённый текст #526174"></div><strong>Приглушённый текст</strong><code>#526174</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-accent)" aria-label="Акцент #1D4ED8"></div><strong>Акцент</strong><code>#1D4ED8</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-error)" aria-label="Ошибка #B42318"></div><strong>Ошибка</strong><code>#B42318</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-success)" aria-label="Успех #15803D"></div><strong>Успех</strong><code>#15803D</code></div>
+<div class="swatch-item"><div class="swatch" style="background:var(--color-border)" aria-label="Граница #8A94A6"></div><strong>Граница</strong><code>#8A94A6</code></div></div>
+ <p class="section-note">Цвет сопровождается текстом статуса. Нехватка детали — отдельная отметка в заявке, а не ошибка её создания. Светлые подложки и hover-состояния получаются из этих же цветов.</p>
+</section>
+<section class="design-section" id="typography" aria-labelledby="typography-title">
+ <div class="section-head"><h2 id="typography-title">Типографика</h2><span class="section-caption">Inter · размеры, интерлиньяж и вес</span></div>
+ <div class="type-list"><div class="type-row"><div class="type-meta"><code>h1</code><span>28 / 36 px · 600</span></div><div class="type-h1">Заявки на запчасти</div></div>
+<div class="type-row"><div class="type-meta"><code>h2</code><span>22 / 30 px · 600</span></div><div class="type-h2">Движение по складу</div></div>
+<div class="type-row"><div class="type-meta"><code>h3</code><span>18 / 26 px · 600</span></div><div class="type-h3">Данные автомобиля</div></div>
+<div class="type-row"><div class="type-meta"><code>body</code><span>16 / 24 px · 400</span></div><div class="type-body">У каждой выдачи есть машина, деталь и получатель.</div></div>
+<div class="type-row"><div class="type-meta"><code>button</code><span>15 / 20 px · 600</span></div><div class="type-button">Создать заявку</div></div>
+<div class="type-row"><div class="type-meta"><code>метка / подсказка</code><span>14 / 20 px · 500</span></div><div class="type-label">Количество, шт.</div></div></div>
+ <div class="numeric-example"><span>Доходы<strong>125 000,00 ₽</strong></span><span>Учтённые расходы<strong>84 500,00 ₽</strong></span><span>Результат по учтённым статьям<strong>40 500,00 ₽</strong></span></div>
+ <p class="section-note">Для числовых значений включены цифры одинаковой ширины. Шрифт загружается из Google Fonts; при отсутствии интернета используется системный шрифт.</p>
+</section>
+<section class="design-section" id="buttons" aria-labelledby="buttons-title" data-example-area>
+ <div class="section-head"><h2 id="buttons-title">Кнопки</h2><span class="section-caption">Радиус 6 px · padding 10 × 16 px · высота от 44 px</span></div>
+ <div class="button-board">
+ <span class="board-col-label"></span><span class="board-col-label">Primary</span><span class="board-col-label">Secondary</span><span class="board-col-label">Ghost</span>
+ <span class="board-row-label">Обычное состояние</span>
+ <div class="button-cell"><button class="btn btn-primary" type="button" data-kind="Primary" data-demo-message="Выбрано основное действие «Создать заявку»."><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-clipboard-list"></use></svg>Создать заявку</button></div>
+ <div class="button-cell"><button class="btn btn-secondary" type="button" data-kind="Secondary" data-demo-message="Выбрано второстепенное действие «Номенклатура».">Номенклатура</button></div>
+ <div class="button-cell"><button class="btn btn-ghost" type="button" data-kind="Ghost" data-demo-message="Выбрано действие «Вернуться».">Вернуться</button></div>
+ <span class="board-row-label">Наведение — образец</span>
+ <div class="button-cell"><button class="btn btn-primary is-hover" type="button" data-kind="Primary" data-demo-message="Показано наведение на основное действие."><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-clipboard-list"></use></svg>Создать заявку</button></div>
+ <div class="button-cell"><button class="btn btn-secondary is-hover" type="button" data-kind="Secondary" data-demo-message="Показано наведение на второстепенное действие.">Номенклатура</button></div>
+ <div class="button-cell"><button class="btn btn-ghost is-hover" type="button" data-kind="Ghost" data-demo-message="Показано наведение на действие без рамки.">Вернуться</button></div>
+ </div>
+ <p class="example-status" data-example-status aria-live="polite">Наведите курсор на верхний ряд. Нижний ряд показывает hover без наведения.</p>
+ <p class="section-note">В обычном состоянии тени нет. При наведении — подъём на 1 px и мягкая тень; у основной кнопки фон чуть темнее. Клавиша Tab показывает контур фокуса.</p>
+</section>
+<section class="design-section" id="cards" aria-labelledby="cards-title" data-example-area>
+ <div class="section-head"><h2 id="cards-title">Карточки</h2><span class="section-caption">Белый фон · padding 24 px · радиус 8 px</span></div>
+ <div class="card-grid">
+ <article class="card"><p class="card-eyebrow">Обычная</p><h3>Заявка З-0264</h3><p class="card-copy">КамАЗ 5490 · А743КХ41<br>Масляный фильтр LF9009 · 2 шт.</p><div class="action-row"><button class="btn btn-secondary" type="button" data-demo-message="Выбрана обычная карточка заявки З-0264.">Открыть заявку</button></div></article>
+ <article class="card card-selected"><p class="card-eyebrow">Выбранная</p><h3>КамАЗ 5490</h3><p class="card-copy">А743КХ41<br>Машина выбрана для просмотра связанных операций.</p><div class="action-row"><button class="btn btn-primary" type="button" data-demo-message="Выбрана карточка машины КамАЗ 5490.">Посмотреть операции</button></div></article>
+ <article class="card card-success"><p class="card-eyebrow">Успешное завершение</p><h3>Документ В-0185</h3><p class="card-copy">Ремень приводной · 1 шт.<br>Получатель: Андрей Соколов.</p><p class="card-status"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-circle-check"></use></svg>Получение подтверждено</p><div class="action-row"><button class="btn btn-ghost" type="button" data-demo-message="Выбран завершённый документ В-0185.">Открыть документ</button></div></article>
+ </div><p class="example-status" data-example-status aria-live="polite"></p>
+ <p class="section-note">Обычная карточка — тонкая граница без тени. Выбор и успешное завершение показаны цветом и подписью.</p>
+</section>
+<section class="design-section" id="forms" aria-labelledby="forms-title">
+ <div class="section-head"><h2 id="forms-title">Формы и инпуты</h2><span class="section-caption">Радиус 6 px · текст 16 px · видимые подписи</span></div>
+ <p class="section-intro">В каждой колонке — input, select и textarea. Фокус и ошибки в образцах закреплены для сравнения; поля можно выделить и изменить.</p>
+ <div class="forms-grid"><div class="form-specimen"><div class="specimen-heading"><h3>Обычное состояние</h3><p>Серая рамка и короткая подсказка.</p></div><div class="field"><label for="spec-normal-qty">Количество, шт.</label><input class="control" id="spec-normal-qty" inputmode="numeric" value="2"><p class="field-hint">Для штучной детали — целое число.</p></div><div class="field"><label for="spec-normal-topic">Тема сообщения</label><div class="select-wrap"><select class="control" id="spec-normal-topic"><option value="">Выберите тему</option><option value="question" selected>Вопрос по заявке</option><option value="issue">Ошибка в интерфейсе</option></select></div></div><div class="field"><label for="spec-normal-message">Сообщение</label><textarea class="control textarea" id="spec-normal-message" rows="3" placeholder="Опишите вопрос">Уточните, пожалуйста, наличие фильтра LF9009.</textarea></div></div><div class="form-specimen"><div class="specimen-heading"><h3>Фокус</h3><p>Синий контур 2 px с отступом 2 px.</p></div><div class="field"><label for="spec-focus-qty">Количество, шт.</label><input class="control show-focus" id="spec-focus-qty" inputmode="numeric" value="2"><p class="field-hint">Для штучной детали — целое число.</p></div><div class="field"><label for="spec-focus-topic">Тема сообщения</label><div class="select-wrap"><select class="control show-focus" id="spec-focus-topic"><option value="">Выберите тему</option><option value="question" selected>Вопрос по заявке</option><option value="issue">Ошибка в интерфейсе</option></select></div></div><div class="field"><label for="spec-focus-message">Сообщение</label><textarea class="control textarea show-focus" id="spec-focus-message" rows="3" placeholder="Опишите вопрос">Уточните, пожалуйста, наличие фильтра LF9009.</textarea></div></div><div class="form-specimen"><div class="specimen-heading"><h3>Ошибка</h3><p>Причина и способ исправления под полем.</p></div><div class="field"><label for="spec-error-qty">Количество, шт.</label><input class="control has-error" id="spec-error-qty" inputmode="numeric" value="0" aria-invalid="true" aria-describedby="spec-error-qty-error"><p class="field-error" id="spec-error-qty-error">Укажите целое количество больше нуля.</p></div><div class="field"><label for="spec-error-topic">Тема сообщения</label><div class="select-wrap"><select class="control has-error" id="spec-error-topic" aria-invalid="true" aria-describedby="spec-error-topic-error"><option value="" selected>Выберите тему</option><option value="question">Вопрос по заявке</option><option value="issue">Ошибка в интерфейсе</option></select></div><p class="field-error" id="spec-error-topic-error">Выберите тему из списка.</p></div><div class="field"><label for="spec-error-message">Сообщение</label><textarea class="control textarea has-error" id="spec-error-message" rows="3" aria-invalid="true" aria-describedby="spec-error-message-error" placeholder="Опишите вопрос"></textarea><p class="field-error" id="spec-error-message-error">Напишите сообщение.</p></div></div></div>
+</section>
+<section class="design-section" id="radii" aria-labelledby="radii-title">
+ <div class="section-head"><h2 id="radii-title">Радиусы</h2><span class="section-caption">Умеренное скругление</span></div>
+ <div class="radius-grid"><div class="radius-item"><div class="radius-block" style="border-radius:var(--radius-button)" aria-label="Скругление кнопки 6 пикселей"></div><strong>Кнопки</strong><code>6 px</code></div><div class="radius-item"><div class="radius-block" style="border-radius:var(--radius-card)" aria-label="Скругление карточки 8 пикселей"></div><strong>Карточки</strong><code>8 px</code></div><div class="radius-item"><div class="radius-block" style="border-radius:var(--radius-input)" aria-label="Скругление поля 6 пикселей"></div><strong>Инпуты</strong><code>6 px</code></div></div>
+</section>
+<section class="design-section" id="spacing" aria-labelledby="spacing-title">
+ <div class="section-head"><h2 id="spacing-title">Отступы</h2><span class="section-caption">База 4 px · полосы в реальном размере</span></div>
+ <div class="spacing-grid"><div class="spacing-item"><div class="spacing-stage"><span style="width:4px"></span></div><div><strong>xs</strong><code>4 px</code></div></div>
+<div class="spacing-item"><div class="spacing-stage"><span style="width:8px"></span></div><div><strong>sm</strong><code>8 px</code></div></div>
+<div class="spacing-item"><div class="spacing-stage"><span style="width:16px"></span></div><div><strong>md</strong><code>16 px</code></div></div>
+<div class="spacing-item"><div class="spacing-stage"><span style="width:24px"></span></div><div><strong>lg</strong><code>24 px</code></div></div>
+<div class="spacing-item"><div class="spacing-stage"><span style="width:32px"></span></div><div><strong>xl</strong><code>32 px</code></div></div></div>
+ <p class="section-note">8 px между подписью и полем, 16 px между связанными элементами, 24 px внутри карточки и между группами, 32 px между крупными блоками.</p>
+</section>
+<section class="design-section" id="icons" aria-labelledby="icons-title">
+ <div class="section-head"><h2 id="icons-title">Иконки</h2><span class="section-caption">Lucide · outline · 20 px · stroke 2</span></div>
+ <div class="icon-grid"><div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg><span>Поиск</span><code>search</code></div>
+<div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-truck"></use></svg><span>Машина</span><code>truck</code></div>
+<div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-package"></use></svg><span>Запчасть</span><code>package</code></div>
+<div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-clipboard-list"></use></svg><span>Заявки</span><code>clipboard-list</code></div>
+<div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-circle-check"></use></svg><span>Подтверждение</span><code>circle-check</code></div>
+<div class="icon-specimen"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-printer"></use></svg><span>Печать</span><code>printer</code></div></div>
+ <p class="section-note">Один набор для всего сайта. Иконка дополняет подпись действия; шесть SVG включены прямо в этот файл.</p>
+</section>
+<section class="design-section" id="motion" aria-labelledby="motion-title">
+ <div class="section-head"><h2 id="motion-title">Переходы</h2><span class="section-caption">120 мс · ease-out</span></div>
+ <div class="motion-example"><button type="button" class="btn btn-primary" data-open-confirmation>Показать подтверждение</button><div class="motion-copy"><strong>Короткий отклик на действие</strong><p>Цвет, тень и подъём кнопки меняются за 120 мс. Без анимации таблиц и перемещения страниц. Учитывается системная настройка уменьшения движения.</p></div></div>
+ <p class="example-status" data-confirmation-status aria-live="polite"></p>
+</section>
+<section class="design-section" id="tone" aria-labelledby="tone-title">
+ <div class="section-head"><h2 id="tone-title">Характер и тексты</h2><span class="section-caption">Спокойный деловой тон</span></div>
+ <div class="tone-summary"><strong>Понятно, что происходит с заявкой, запчастью и машиной.</strong><p>Короткие подписи, конкретные действия и объяснение последствий. В ошибке указываем, как продолжить; перед выдачей повторяем машину, деталь и количество.</p></div>
+ <div class="copy-grid">
+ <article class="message-example message-error"><h3>Ошибка</h3><p>Не удалось сохранить заявку. Данные остались в форме. Повторите отправку.</p></article>
+ <article class="message-example"><h3>Пустой список</h3><p>Заявок пока нет.</p><div class="action-row" style="margin-top:16px"><a class="btn btn-primary" href="#screen">Посмотреть образец</a></div></article>
+ <article class="message-example message-success"><h3>Успех</h3><p>Заявка З-0265 отправлена на склад.</p></article>
+ <article class="message-example"><h3>Подтверждение</h3><p>Подтвердить выдачу 2 масляных фильтров для КамАЗ А743КХ41? Остаток уменьшится на 2 шт., расход будет отнесён на эту машину.</p><div class="action-row" style="margin-top:16px"><button type="button" class="btn btn-secondary" data-open-confirmation>Открыть диалог</button></div><p class="example-status" data-confirmation-status aria-live="polite"></p></article>
+ </div>
+</section>
+<section class="design-section" id="screen" aria-labelledby="screen-title">
+ <div class="section-head"><h2 id="screen-title">Образец экрана</h2><span class="section-caption">Компоненты в одном рабочем интерфейсе</span></div>
+ <div class="screen-shell" data-example-area>
+  <div class="screen-header"><strong><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-package"></use></svg>Отдел снабжения</strong><span>Андрей Соколов · механик</span></div>
+  <div class="screen-body">
+   <div class="screen-title-row"><div><h3>Рабочее место механика</h3><p>Запрашивайте запчасти и следите за состоянием своих обращений.</p></div><div class="action-row"><button type="button" class="btn btn-primary" data-demo-message="Выбрано действие «Создать заявку». В этом файле показан только внешний вид компонентов."><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-clipboard-list"></use></svg>Создать заявку</button><button type="button" class="btn btn-secondary" data-demo-message="Выбрано действие «Номенклатура». В этом файле показан только внешний вид компонентов."><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg>Номенклатура</button></div></div>
+   <div class="card-grid">
+    <article class="card feature-card"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-clipboard-list"></use></svg><h3>Мои заявки</h3><p class="card-copy">Машина, нужная деталь и состояние обращения — в одном списке.</p><div class="action-row"><button type="button" class="btn btn-ghost" data-demo-message="Выбрана карточка «Мои заявки».">Посмотреть заявки</button></div></article>
+    <article class="card feature-card"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-package"></use></svg><h3>Наличие запчастей</h3><p class="card-copy">Поиск по названию или артикулу с указанием единицы и остатка.</p><div class="action-row"><button type="button" class="btn btn-ghost" data-demo-message="Выбрана карточка «Наличие запчастей».">Найти деталь</button></div></article>
+    <article class="card feature-card"><svg class="icon " aria-hidden="true" focusable="false"><use href="#icon-circle-check"></use></svg><h3>Получение</h3><p class="card-copy">Проверьте документ и подтвердите фактическое получение детали.</p><div class="action-row"><button type="button" class="btn btn-ghost" data-demo-message="Выбрана карточка «Получение».">Открыть документы</button></div></article>
+   </div>
+   <p class="example-status" data-example-status aria-live="polite"></p>
+   <div class="feedback">
+    <div class="feedback-heading"><h3>Обратная связь по интерфейсу</h3><p>Демонстрационная форма для проверки оформления и ошибок. Сообщение никуда не отправляется.</p></div>
+    <form id="feedback-form" novalidate>
+     <div class="feedback-grid">
+      <div class="field"><label for="feedback-name">Имя</label><input class="control" id="feedback-name" name="name" value="Андрей Соколов" required minlength="2" maxlength="80" autocomplete="off"><p id="feedback-name-error" class="field-error" hidden>Укажите имя: не меньше двух символов.</p></div>
+      <div class="field"><label for="feedback-topic">Тема</label><div class="select-wrap"><select class="control" id="feedback-topic" name="topic" required><option value="">Выберите тему</option><option value="question">Вопрос по работе интерфейса</option><option value="error">Ошибка в интерфейсе</option><option value="suggestion">Предложение</option></select></div><p id="feedback-topic-error" class="field-error" hidden>Выберите тему сообщения.</p></div>
+      <div class="field feedback-full"><label for="feedback-message">Сообщение</label><textarea class="control textarea" id="feedback-message" name="message" required minlength="10" maxlength="1000" rows="3" placeholder="Что удобно, а что стоит изменить?" aria-describedby="feedback-message-hint"></textarea><p class="field-hint" id="feedback-message-hint">От 10 до 1000 символов.</p><p id="feedback-message-error" class="field-error" hidden>Напишите сообщение: не меньше 10 символов.</p></div>
+     </div>
+     <div class="action-row"><button class="btn btn-primary" type="submit">Проверить форму</button><button class="btn btn-secondary" type="reset">Сбросить</button></div>
+     <p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
+    </form>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+<footer class="page-footer"><p>Визуальный preview. Основные токены из обсуждения; финальные решения будут сохранены в дизайн.md после проверки.</p></footer>
+</div>
+<dialog id="confirmation-dialog" aria-labelledby="confirmation-title" aria-describedby="confirmation-description">
+ <h2 id="confirmation-title">Подтвердить фактическую выдачу?</h2>
+ <p id="confirmation-description">Масляный фильтр LF9009 — 2 шт.<br>КамАЗ 5490 · А743КХ41.<br><br>Остаток уменьшится на 2 шт., расход будет отнесён на эту машину.</p>
+ <p class="field-hint">Это образец диалога. Складские данные не меняются.</p>
+ <div class="action-row"><button type="button" class="btn btn-secondary" id="cancel-confirmation">Отмена</button><button type="button" class="btn btn-primary" id="accept-confirmation">Подтвердить выдачу</button></div>
+</dialog>
+<template id="lucide-license"><pre>ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre></template>
+<script>
+(function(){
+ "use strict";
+ const byId=function(id){return document.getElementById(id);};
+ document.querySelectorAll("[data-demo-message]").forEach(function(button){
+  button.addEventListener("click",function(){
+   const area=button.closest("[data-example-area]");
+   const status=area?area.querySelector("[data-example-status]"):null;
+   if(status)status.textContent=button.dataset.demoMessage;
+  });
+ });
+ const dialog=byId("confirmation-dialog");
+ let confirmationOpener=null;
+ document.querySelectorAll("[data-open-confirmation]").forEach(function(button){
+  button.addEventListener("click",function(){confirmationOpener=button;dialog.showModal();});
+ });
+ byId("cancel-confirmation").addEventListener("click",function(){dialog.close("cancel");});
+ byId("accept-confirmation").addEventListener("click",function(){
+  dialog.close("confirm");
+  const area=confirmationOpener?confirmationOpener.closest(".design-section"):null;
+  const status=area?area.querySelector("[data-confirmation-status]"):null;
+  if(status)status.textContent="Пример подтверждения завершён. Данные склада не менялись.";
+ });
+ dialog.addEventListener("close",function(){if(confirmationOpener)confirmationOpener.focus();});
+ const form=byId("feedback-form");
+ let submitted=false;
+ const rules=[
+  {field:byId("feedback-name"),error:byId("feedback-name-error"),valid:function(value){return value.trim().length>=2;}},
+  {field:byId("feedback-topic"),error:byId("feedback-topic-error"),valid:function(value){return value!=="";}},
+  {field:byId("feedback-message"),error:byId("feedback-message-error"),hint:"feedback-message-hint",valid:function(value){return value.trim().length>=10;}}
+ ];
+ function validate(rule){
+  const valid=rule.valid(rule.field.value);
+  rule.field.classList.toggle("has-error",!valid);
+  if(valid)rule.field.removeAttribute("aria-invalid");else rule.field.setAttribute("aria-invalid","true");
+  rule.error.hidden=valid;
+  const descriptions=rule.hint?[rule.hint]:[];
+  if(!valid)descriptions.push(rule.error.id);
+  if(descriptions.length)rule.field.setAttribute("aria-describedby",descriptions.join(" "));else rule.field.removeAttribute("aria-describedby");
+  return valid;
+ }
+ rules.forEach(function(rule){
+  const eventName=rule.field.tagName==="SELECT"?"change":"input";
+  rule.field.addEventListener(eventName,function(){if(submitted)validate(rule);});
+ });
+ form.addEventListener("submit",function(event){
+  event.preventDefault();submitted=true;
+  const invalid=rules.filter(function(rule){return !validate(rule);});
+  const status=byId("feedback-status");
+  if(invalid.length){
+   status.className="feedback-status is-error";
+   status.textContent="Исправьте отмеченные поля. Введённые данные остались в форме.";
+   invalid[0].field.focus();
+  }else{
+   status.className="feedback-status is-success";
+   status.textContent="Форма заполнена корректно. Это предпросмотр: сообщение никуда не отправлено.";
+  }
+ });
+ form.addEventListener("reset",function(){
+  submitted=false;
+  rules.forEach(function(rule){rule.field.classList.remove("has-error");rule.field.removeAttribute("aria-invalid");rule.error.hidden=true;if(rule.hint)rule.field.setAttribute("aria-describedby",rule.hint);else rule.field.removeAttribute("aria-describedby");});
+  byId("feedback-status").className="feedback-status";byId("feedback-status").textContent="";
+ });
+})();
+</script>
+</body>
+</html>

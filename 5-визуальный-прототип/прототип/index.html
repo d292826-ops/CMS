@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отдел снабжения — выбор участника</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1c2737;background:#f5f7fa;font-size:16px;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.55}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #2563eb;outline-offset:4px}
+.header{background:#fff;border-bottom:1px solid #e2e7ed}.header-inner{max-width:1120px;margin:auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:13px}.mark{height:38px;width:38px;border:1px solid #d8e0eb;border-radius:9px;display:grid;place-items:center;font-size:14px;font-weight:750;background:#f5f7fa}.brand-name{font-weight:700;font-size:18px}.brand-caption{font-size:14px;color:#657083;margin-top:3px}.demo-badge{font-size:14px;color:#46566d;border:1px solid #dbe3ed;background:#f5f7fa;padding:7px 11px;border-radius:6px;white-space:nowrap}
+main{max-width:1120px;margin:auto;padding:42px 28px 22px}.eyebrow{font-size:14px;color:#5d6b80;font-weight:600;margin:0 0 12px}h1{font-size:32px;line-height:1.2;letter-spacing:-.8px;margin:0 0 12px}p{line-height:1.55} .intro{color:#5d6b80;max-width:720px;margin:0 0 30px}
+.workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:start}.panel{border:1px solid #dfe5ec;background:#fff;border-radius:10px;overflow:hidden}.panel-heading{padding:20px 22px 18px;border-bottom:1px solid #edf0f4}.panel-heading h2{font-size:17px;margin:0 0 5px}.panel-heading p{font-size:14px;color:#647084;margin:0}.people{padding:9px}
+.person{width:100%;padding:13px 12px;border:1px solid transparent;background:#fff;display:flex;align-items:center;gap:12px;text-align:left;border-radius:7px;color:inherit;min-height:76px}.person:hover{background:#f7f9fc}.person[aria-pressed="true"]{border-color:#9db8f0;background:#eef4ff}.avatar{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:50%;font-weight:600;font-size:14px;background:#eef1f5;color:#4d5d73}.person[aria-pressed="true"] .avatar{background:#dbe8ff;color:#174ba9}.person-info{min-width:0;flex:1}.person-role{display:block;font-size:16px;font-weight:650}.person-name{display:block;color:#647084;font-size:14px;margin-top:4px}.radio{width:19px;height:19px;border-radius:50%;border:1.5px solid #c1cad7;flex:none}.person[aria-pressed="true"] .radio{border:5px solid #245cc2;background:#fff}
+.role-context{padding:23px}.role-label{font-size:14px;color:#6b778a;margin:0 0 9px}h3{font-size:22px;line-height:1.3;margin:0 0 10px;letter-spacing:-.3px}.role-description{color:#5c6b7f;margin:0 0 19px;font-size:16px}.permission{padding:11px 13px;background:#f6f8fb;font-size:14px;line-height:1.5;color:#506078;border-radius:6px;margin-bottom:23px}.actions{display:flex;flex-wrap:wrap;gap:10px}.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;border:1px solid #d4dce7;background:#fff;color:#26374e;border-radius:6px;font-size:15px;font-weight:550;text-decoration:none}.btn:hover{background:#f5f7fa}.btn.primary{background:#245cc2;border-color:#245cc2;color:#fff}.btn.primary:hover{background:#194a9f}.btn.quiet{border:none;background:transparent;padding:8px 0;color:#52637b}.btn.quiet:hover{text-decoration:underline}.placeholder{padding:40px 26px;display:grid;align-content:center;min-height:350px;text-align:center}.placeholder .placeholder-symbol{display:grid;place-items:center;margin:0 auto 20px;border:1px solid #dde5f0;background:#f7f9fc;width:52px;height:52px;border-radius:50%;font-size:22px;color:#6b7e98}.placeholder h3{font-size:20px}.placeholder p{color:#66758a;max-width:290px;margin:0 auto;font-size:15px}.active-person{border-top:1px solid #edf0f4;padding:14px 22px;font-size:14px;color:#53647b}.active-person strong{font-weight:600;color:#33455d}
+.privacy-note{margin:23px 0 0;font-size:14px;color:#66758a;line-height:1.6;max-width:890px}.bottom-row{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:18px;padding:14px 0;border-top:1px solid #e2e7ed}.saved-state{font-size:14px;color:#66758a}.preview-controls{border-top:1px dashed #d7dee9;margin-top:20px;padding-top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:14px;color:#647084}.preview-controls label{font-size:14px}.preview-controls select{background:#fff;border:1px solid #d7dee9;border-radius:5px;padding:8px 32px 8px 10px;color:#34435a;font-size:14px;min-height:38px}
+.empty-state{padding:42px 25px;text-align:center}.empty-state h3{font-size:19px;margin-bottom:9px}.empty-state p{font-size:15px;color:#607087;margin:0 auto 20px;max-width:330px}.error-title{color:#a32c32}.route-notice{border-top:1px solid #edf0f4;padding:20px 22px;background:#f9fbff}.route-notice h4{font-size:16px;margin:0 0 8px}.route-notice p{margin:0 0 12px;font-size:14px;line-height:1.5;color:#53647b}.status-message{font-size:14px;color:#5a6c85;min-height:21px;margin-top:9px}
+dialog{border:1px solid #dce3ed;border-radius:10px;padding:25px;max-width:440px;width:calc(100% - 36px);color:inherit}dialog::backdrop{background:rgba(21,34,54,.35)}dialog h2{font-size:21px;margin:0 0 12px}dialog p{font-size:15px;color:#5c6b80;margin:0 0 21px}.dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+@media(min-width:1300px){main{padding-top:48px}.workspace{gap:28px}}
+@media(max-width:750px){.header-inner{padding:18px 20px}.header-inner .brand-caption{display:none}main{padding:28px 20px 18px}h1{font-size:27px}.workspace{grid-template-columns:1fr;gap:18px}.placeholder{min-height:220px;padding:30px 20px}.bottom-row{align-items:flex-start;flex-direction:column;gap:5px}.role-context{padding:21px}.intro{margin-bottom:24px}.demo-badge{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+[hidden]{display:none!important}
+
+.header-state{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:flex-end}.header-participant{font-size:14px;color:#52637b}
+.back-link{display:inline-flex;border:0;background:none;padding:0;min-height:34px;color:#52637b;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.request-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;margin:15px 0 25px}.request-title-row .intro{margin:0;max-width:640px}.request-title-row .actions{justify-content:flex-end;flex:none;padding-top:7px}
+.request-participant{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 25px;font-size:14px;color:#5c6b7f}.request-participant select{font-size:14px;min-height:40px;padding:8px 34px 8px 11px;background:#fff;border:1px solid #d5deea;border-radius:6px;color:#33455d}
+.request-panel{border:1px solid #dfe5ec;border-radius:10px;background:#fff;overflow:hidden}.request-tabs{display:flex;padding:0 20px;border-bottom:1px solid #e1e6ed;gap:24px}.request-tab{background:none;border:0;border-bottom:3px solid transparent;color:#617086;padding:20px 0 16px;min-height:58px;font-size:16px;font-weight:550}.request-tab[aria-selected="true"]{color:#1b4f9e;border-bottom-color:#245cc2}.tab-count{font-size:13px;display:inline-block;padding:2px 7px;background:#edf1f6;border-radius:5px;margin-left:7px;font-weight:600;color:#5a6a80}.request-tab[aria-selected="true"] .tab-count{background:#e4edff;color:#194a9f}
+.request-table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed;font-size:14px}.request-table th{font-size:13px;line-height:1.4;font-weight:550;background:#fafbfd;color:#657389;padding:14px 16px;border-bottom:1px solid #e7ebf1;vertical-align:top}.request-table td{padding:19px 16px;border-bottom:1px solid #edf0f4;line-height:1.5;vertical-align:top}.request-table tbody tr:last-child td{border-bottom:0}.request-table .record-number{font-weight:650;white-space:nowrap;color:#243c60}.request-table .cell-sub{display:block;font-size:13px;color:#6a788a;margin-top:5px;line-height:1.5}.request-table .vin{font-size:12px;white-space:nowrap;letter-spacing:.1px}.request-table .part-title{font-weight:550;color:#2f4058}.request-table .cell-qty{white-space:nowrap;font-size:15px}.request-table .btn{padding:8px 11px;font-size:14px;min-height:40px}.request-table .receipt-button{white-space:normal;line-height:1.4}
+.request-status{display:inline-block;font-size:13px;font-weight:550;padding:4px 8px;border-radius:5px;line-height:1.4}.request-status.wait{background:#edf2f9;color:#4c617d}.request-status.prepared{background:#edf3ff;color:#2453a0}.request-status.issued{background:#eaf5ef;color:#2c694b}.request-status.pending{background:#fff3de;color:#855709}.stock-note{display:block;font-size:13px;margin-top:7px;color:#5d6e82;line-height:1.5}.stock-note.shortage{color:#916013;font-weight:550}.request-panel-footer{padding:15px 20px;border-top:1px solid #e7ebf1;font-size:14px;color:#66758a;line-height:1.5}.request-help{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:#647084;font-size:14px}.request-empty{padding:50px 24px;text-align:center}.request-empty h3{font-size:20px}.request-empty p{font-size:15px;color:#617187;max-width:470px;margin:0 auto 22px}.request-empty .actions{justify-content:center}.requests-notice{padding:19px 22px;margin-top:18px;background:#fff;border:1px solid #dfe5ec;border-radius:8px}.requests-notice h3{font-size:18px}.requests-notice p{font-size:15px;color:#617187;margin:0 0 14px}.inline-status{font-size:14px;color:#617187;margin:12px 0 0;min-height:22px}
+@media(max-width:1000px){.request-title-row{flex-direction:column;gap:12px}.request-title-row .actions{justify-content:flex-start;padding:0}.request-table th,.request-table td{padding-left:12px;padding-right:12px}.request-table .vin{font-size:11px}}
+@media(max-width:800px){.header-participant{display:none}.request-tabs{gap:20px;padding:0 18px}.request-tab{font-size:15px}.request-table,.request-table tbody,.request-table tr,.request-table td{display:block;width:100%}.request-table thead{display:none}.request-table tr{padding:16px 18px;border-bottom:1px solid #e5eaf1}.request-table tr:last-child{border-bottom:0}.request-table td{padding:6px 0;border:0}.request-table td:before{content:attr(data-label);display:block;font-size:12px;color:#6a788a;margin-bottom:3px}.request-table td.action-cell:before{display:none}.request-table .vin{font-size:13px}.request-table .btn{margin-top:6px;width:100%}.request-table .cell-sub{margin-top:2px}.request-empty{padding:36px 20px}.request-title-row{margin-top:12px}.request-panel-footer{padding:14px 18px}}
+
+</style>
+</head>
+<body>
+<header class="header"><div class="header-inner"><div class="brand"><span class="mark" aria-hidden="true">ОС</span><div><div class="brand-name">Отдел снабжения</div><div class="brand-caption">Заявки, склад и расходы машин</div></div></div><div class="header-state"><span id="header-participant" class="header-participant"></span><span class="demo-badge">Учебный прототип</span></div></div></header>
+<main id="start-screen">
+<p class="eyebrow">Старт демонстрации</p>
+<h1>Выберите участника</h1>
+<p class="intro">Посмотрите, как заявка на запчасть проходит через склад и становится расходом конкретной машины.</p>
+<div class="workspace">
+<section class="panel" aria-labelledby="people-title"><div class="panel-heading"><h2 id="people-title">Демонстрационные участники</h2><p>Выберите роль, чтобы открыть её рабочие действия.</p></div>
+<div id="people" class="people" aria-label="Выбор участника"></div>
+<div id="data-state" hidden></div>
+</section>
+<section class="panel" aria-label="Действия выбранного участника">
+<div id="role-placeholder" class="placeholder"><div class="placeholder-symbol" aria-hidden="true">◎</div><h3>С чего начнём?</h3><p>Выберите участника слева. Здесь появятся его задачи и доступные действия.</p></div>
+<div id="role-context" class="role-context" hidden><p class="role-label">Рабочая область</p><h3 id="role-title"></h3><p id="role-description" class="role-description"></p><div id="permission" class="permission"></div><div id="actions" class="actions"></div></div>
+<div id="active-person" class="active-person" hidden></div>
+<div id="route-notice" class="route-notice" aria-live="polite" hidden><h4 id="route-title"></h4><p id="route-text"></p><button type="button" class="btn" id="close-route">Вернуться к выбору действия</button></div>
+</section>
+</div>
+<p class="privacy-note">Все имена, машины и операции в прототипе вымышлены. Переключение роли помогает показать процесс и не является защищённым входом.</p>
+<div class="bottom-row"><span id="saved-state" class="saved-state">Участник пока не выбран</span><button type="button" id="reset" class="btn quiet" disabled>Начать демонстрацию заново</button></div>
+<div id="status-message" class="status-message" aria-live="polite"></div>
+<div class="preview-controls" aria-label="Проверка состояний прототипа"><label for="state-select">Предпросмотр состояния экрана</label><select id="state-select"><option value="data">С данными</option><option value="empty">Пусто</option><option value="error">Ошибка</option></select></div>
+</main>
+
+<main id="requests-screen" hidden>
+<button type="button" class="back-link" id="requests-back">К выбору участника</button>
+<div class="request-title-row"><div><h1>Мои заявки и получения</h1><p class="intro">Следите за своими заявками и откройте документы, по которым нужно подтвердить получение.</p></div><div class="actions"><button type="button" class="btn" id="requests-catalog">Номенклатура</button><button type="button" class="btn primary" id="requests-new">Создать заявку</button></div></div>
+<div class="request-participant"><label for="requests-participant">Демонстрационный участник</label><select id="requests-participant"><option value="mechanic">Андрей Соколов · механик</option><option value="driver">Илья Волков · водитель</option></select></div>
+<section class="request-panel" aria-label="Заявки и документы получения">
+<div class="request-tabs" role="tablist" aria-label="Тип записей"><button type="button" class="request-tab" id="tab-own" role="tab" aria-selected="true" aria-controls="requests-content">Мои заявки <span class="tab-count" id="count-own">3</span></button><button type="button" class="request-tab" id="tab-receipts" role="tab" aria-selected="false" aria-controls="requests-content">Мне выдано <span class="tab-count" id="count-receipts">2</span></button></div>
+<div id="requests-content" role="tabpanel" aria-labelledby="tab-own"></div>
+<div class="request-panel-footer" id="requests-footer">Нехватка детали не отменяет заявку: она остаётся в очереди склада.</div>
+</section>
+<div class="request-help"><span>Все имена и операции вымышлены. Цены и суммы в этом разделе не показываются.</span></div>
+<div id="requests-notice" class="requests-notice" aria-live="polite" hidden><h3 id="requests-notice-title"></h3><p id="requests-notice-text"></p><button type="button" class="btn" id="requests-close-notice">Вернуться к списку</button></div>
+<div id="requests-message" class="inline-status" aria-live="polite"></div>
+<div class="preview-controls"><label for="requests-state">Предпросмотр состояния списка</label><select id="requests-state"><option value="data">С данными</option><option value="empty">Пусто</option><option value="error">Ошибка</option></select></div>
+</main>
+
+<dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Начать демонстрацию заново?</h2><p>Выбор участника будет сброшен. Вы вернётесь на стартовый экран.</p><div class="dialog-actions"><button type="button" class="btn" id="cancel-reset">Отмена</button><button type="button" class="btn primary" id="confirm-reset">Начать заново</button></div></dialog>
+<script>
+"use strict";
+const participants=[
+ {id:"mechanic",role:"Механик",name:"Андрей Соколов",initials:"АС",title:"Заявки на запчасти",description:"Найдите деталь в общей номенклатуре, выберите машину и отправьте заявку на склад.",permission:"Свои заявки и получение запчастей. Цены и финансовые показатели не показываются.",actions:[["Создать заявку","request"],["Мои заявки","my-requests"],["Номенклатура","catalog"]]},
+ {id:"driver",role:"Водитель",name:"Илья Волков",initials:"ИВ",title:"Заявки и получение",description:"Запросите нужную деталь для машины и подтвердите получение после выдачи кладовщиком.",permission:"Свои обращения и документы получения. Дополнительная подпись механика не нужна.",actions:[["Создать заявку","request"],["Мои заявки","my-requests"],["Номенклатура","catalog"]]},
+ {id:"warehouse",role:"Кладовщик",name:"Марина Белова",initials:"МБ",title:"Рабочее место склада",description:"Откройте очередь, проверьте наличие и оформите фактическую выдачу запчасти.",permission:"Остатки, стоимость деталей и суммы складских документов. Доходы и результат машин недоступны.",actions:[["Очередь склада","queue"],["Номенклатура","catalog"]]},
+ {id:"finance",role:"Финансовый директор",name:"Елена Морозова",initials:"ЕМ",title:"Разбор результата машины",description:"Сопоставьте доходы и расходы за период. Раскройте затраты до исходной операции и документа.",permission:"Финансовые данные и связанные документы в режиме чтения. Складские операции недоступны.",actions:[["Разобрать машину","vehicle"]]},
+ {id:"owner",role:"Собственник",name:"Дмитрий Орлов",initials:"ДО",title:"Разбор результата машины",description:"Посмотрите, что заработала машина и какие расходы повлияли на её результат.",permission:"Доходы, расходы и результат по учтённым статьям. Подтверждения выдачи не требуются.",actions:[["Разобрать машину","vehicle"]]}
+];
+const destinations={
+ request:{title:"Создание заявки",text:"Следующий экран: машина и VIN, позиция общей номенклатуры, количество и комментарий."},
+ "my-requests":{title:"Мои заявки и получения",text:"Следующий экран: свои заявки, их состояния и документы, ожидающие подтверждения получения."},
+ catalog:{title:"Общая номенклатура и наличие",text:"Следующий экран: поиск по названию или артикулу, единицы измерения и остатки."},
+ queue:{title:"Очередь заявок склада",text:"Следующий экран: обращения механиков и водителей, наличие деталей и подготовка выдачи."},
+ vehicle:{title:"Карточка машины — финансовый разбор",text:"Следующий экран: выбор машины и периода, доходы, расходы и результат с переходом к документам."}
+};
+const key="snabzhenie-first-screen-preview";
+let selected=null,view="data",storageAvailable=true;
+try{const stored=JSON.parse(localStorage.getItem(key)||"null");if(stored&&participants.some(p=>p.id===stored.participant))selected=stored.participant;}catch(error){storageAvailable=false;}
+const $=id=>document.getElementById(id);
+function saveSelection(){try{localStorage.setItem(key,JSON.stringify({participant:selected}));storageAvailable=true;return true;}catch(error){storageAvailable=false;return false;}}
+function choose(id){const previous=selected;selected=id;if(!saveSelection()){selected=previous;$("status-message").textContent="Не удалось сохранить выбор участника. Освободите место в браузере и повторите действие.";return;}render();$("status-message").textContent="Участник выбран. Выберите рабочее действие.";}
+function render(){
+ const headerPerson=participants.find(x=>x.id===selected);if($("header-participant"))$("header-participant").textContent=headerPerson?headerPerson.name+" · "+headerPerson.role:"";
+ $("route-notice").hidden=true;
+ $("people").replaceChildren();
+ $("people").hidden=view!=="data";
+ $("data-state").hidden=view==="data";
+ if(view!=="data"){
+   const isError=view==="error";
+   $("data-state").innerHTML='<div class="empty-state" '+(isError?'role="alert"':'')+'><h3 '+(isError?'class="error-title"':'')+'>'+(isError?'Не удалось загрузить участников':'Участники не найдены')+'</h3><p>'+(isError?'Не получилось открыть демонстрационные данные. Повторите загрузку.':'В этом наборе пока нет участников. Загрузите демонстрационные данные, чтобы начать.')+'</p><button type="button" class="btn primary" id="reload-data">'+(isError?'Повторить':'Загрузить демоданные')+'</button></div>';
+   $("reload-data").addEventListener("click",()=>{view="data";$("state-select").value="data";render();$("status-message").textContent="Демонстрационные участники загружены.";});
+ }else{
+   for(const p of participants){
+     const button=document.createElement("button");button.type="button";button.className="person";button.setAttribute("aria-pressed",String(selected===p.id));button.setAttribute("aria-label",p.role+" — "+p.name);
+     button.innerHTML='<span class="avatar" aria-hidden="true">'+p.initials+'</span><span class="person-info"><span class="person-role">'+p.role+'</span><span class="person-name">'+p.name+'</span></span><span class="radio" aria-hidden="true"></span>';
+     button.addEventListener("click",()=>choose(p.id));$("people").append(button);
+   }
+ }
+ const p=view==="data"?participants.find(p=>p.id===selected):null;
+ $("role-placeholder").hidden=!!p;$("role-context").hidden=!p;$("active-person").hidden=!p;
+ if(p){
+   $("role-title").textContent=p.title;$("role-description").textContent=p.description;$("permission").textContent=p.permission;$("actions").replaceChildren();
+   p.actions.forEach(([label,route],index)=>{const button=document.createElement("button");button.type="button";button.className="btn"+(index===0?" primary":"");button.textContent=label;button.addEventListener("click",()=>{if(route==="my-requests"){location.hash="/requests";return;}$("route-title").textContent=destinations[route].title;$("route-text").textContent=destinations[route].text+" Сейчас показан только первый экран прототипа.";$("route-notice").hidden=false;});$("actions").append(button);});
+   $("active-person").innerHTML="Вы действуете как <strong>"+p.name+"</strong>";
+ }
+ $("reset").disabled=!selected;
+ $("saved-state").textContent=selected?(storageAvailable?"Выбор сохранён в этом браузере":"Выбор не сохранён"):"Участник пока не выбран";
+ if(view!=="data")$("saved-state").textContent="Загруженных данных нет";
+}
+$("state-select").addEventListener("change",event=>{view=event.target.value;$("status-message").textContent="";render();});
+$("close-route").addEventListener("click",()=>{$("route-notice").hidden=true;});
+$("reset").addEventListener("click",()=>$("reset-dialog").showModal());
+$("cancel-reset").addEventListener("click",()=>$("reset-dialog").close());
+$("confirm-reset").addEventListener("click",()=>{const previous=selected;selected=null;if(!saveSelection()){selected=previous;$("status-message").textContent="Не удалось сбросить выбор. Повторите действие.";return;}$("reset-dialog").close();view="data";$("state-select").value="data";render();$("status-message").textContent="Выбор сброшен. Можно начать с другого участника.";});
+render();
+
+const demoRequests=[
+{id:"0264",date:"23.11.2026",author:"mechanic",recipient:"mechanic",car:"КамАЗ 5490",plate:"А743КХ41",vin:"XTEST000000000001",part:"Фильтр масляный Fleetguard",article:"LF9009",qty:"2",unit:"шт.",status:"NEW",stock:"В наличии"},
+{id:"0261",date:"22.11.2026",author:"mechanic",recipient:"mechanic",car:"Экскаватор JCB 3CX",plate:"4721КМ41",vin:"XTEST000000000002",part:"Рукав высокого давления",article:"332/C8360",qty:"1",unit:"шт.",status:"NEW",stock:"Недостаточно на складе"},
+{id:"0257",date:"21.11.2026",author:"mechanic",recipient:"mechanic",car:"MAN TGS 33.440",plate:"М528СР41",vin:"XTEST000000000003",part:"Колодки тормозные",article:"WVA 29131",qty:"1",unit:"компл.",status:"ISSUED",stock:null},
+{id:"0263",date:"23.11.2026",author:"driver",recipient:"driver",car:"КамАЗ 5490",plate:"А743КХ41",vin:"XTEST000000000001",part:"Фильтр воздушный MANN",article:"C 27 1250",qty:"1",unit:"шт.",status:"ISSUED",stock:null},
+{id:"0260",date:"22.11.2026",author:"driver",recipient:"mechanic",car:"Экскаватор JCB 3CX",plate:"4721КМ41",vin:"XTEST000000000002",part:"Ремень приводной",article:"02/101082",qty:"1",unit:"шт.",status:"ISSUED",stock:null}
+];
+const demoReceipts=[
+{id:"0188",date:"23.11.2026",requestId:"0257",recipient:"mechanic",confirmed:false},
+{id:"0185",date:"22.11.2026",requestId:"0260",recipient:"mechanic",confirmed:true},
+{id:"0187",date:"23.11.2026",requestId:"0263",recipient:"driver",confirmed:false}
+];
+let requestsTab="own",requestsView="data";
+function participantForRequests(){return participants.find(p=>p.id===selected&&["mechanic","driver"].includes(p.id));}
+function showTarget(title,explanation){
+ $("requests-notice-title").textContent=title;
+ $("requests-notice-text").textContent=explanation+" Этот экран будет следующим этапом прототипирования.";
+ $("requests-notice").hidden=false;
+ $("requests-message").textContent="Открыто описание следующего перехода. Список не изменён.";
+}
+function renderRequestList(){
+ const p=participantForRequests();
+ $("requests-notice").hidden=true;
+ $("requests-content").setAttribute("aria-labelledby",requestsTab==="own"?"tab-own":"tab-receipts");
+ $("tab-own").setAttribute("aria-selected",String(requestsTab==="own"));
+ $("tab-receipts").setAttribute("aria-selected",String(requestsTab==="receipts"));
+ if(!p){
+   $("count-own").textContent="0";$("count-receipts").textContent="0";
+   $("requests-content").innerHTML='<div class="request-empty"><h3>Выберите механика или водителя</h3><p>Этот список предназначен для заявителя и получателя запчастей. Выберите участника на стартовом экране.</p><button type="button" class="btn" id="requests-choose-participant">К выбору участника</button></div>';
+   $("requests-choose-participant").addEventListener("click",()=>{location.hash="/";});
+   $("requests-new").disabled=true;$("requests-catalog").disabled=true;$("requests-participant").disabled=true;
+   return;
+ }
+ $("requests-new").disabled=false;$("requests-catalog").disabled=false;$("requests-participant").disabled=false;
+ $("requests-participant").value=p.id;
+ const own=demoRequests.filter(x=>x.author===p.id);
+ const receipts=demoReceipts.filter(x=>x.recipient===p.id);
+ $("count-own").textContent=requestsView==="error"?"—":String(requestsView==="data"?own.length:0);
+ $("count-receipts").textContent=requestsView==="error"?"—":String(requestsView==="data"?receipts.length:0);
+ $("requests-footer").textContent=requestsTab==="own"?"Нехватка детали не отменяет заявку: она остаётся в очереди склада.":"Подтверждение выполняется в документе выдачи. Оно не создаёт повторное списание.";
+ if(requestsView!=="data"){
+  const isError=requestsView==="error";
+  const title=isError?(requestsTab==="own"?"Не удалось загрузить заявки":"Не удалось загрузить документы"):(requestsTab==="own"?"У вас пока нет заявок":"Получений пока нет");
+  const explanation=isError?"Записи не удалось показать. Повторите загрузку: заявки и выдачи не изменятся.":(requestsTab==="own"?"Создайте первую заявку или найдите деталь в номенклатуре.":"Здесь появятся документы, в которых вы указаны получателем запчастей.");
+  $("requests-content").innerHTML='<div class="request-empty" '+(isError?'role="alert"':'')+'><h3 '+(isError?'class="error-title"':'')+'>'+title+'</h3><p>'+explanation+'</p><div class="actions">'+(isError?'<button type="button" class="btn primary" id="requests-retry">Повторить</button>':'<button type="button" class="btn primary" id="requests-empty-new">Создать заявку</button><button type="button" class="btn" id="requests-empty-catalog">Номенклатура</button>')+'</div></div>';
+  if(isError)$("requests-retry").addEventListener("click",()=>{requestsView="data";$("requests-state").value="data";renderRequestList();$("requests-message").textContent="Список загружен. Новых операций не создано.";});
+  else{
+   $("requests-empty-new").addEventListener("click",openNewRequest);
+   $("requests-empty-catalog").addEventListener("click",openCatalog);
+  }
+  return;
+ }
+ const records=requestsTab==="own"?own:receipts.map(d=>Object.assign({},demoRequests.find(x=>x.id===d.requestId),{document:d}));
+ const isReceipt=requestsTab==="receipts";
+ let markup='<table class="request-table"><colgroup><col style="width:13%"><col style="width:23%"><col style="width:23%"><col style="width:9%"><col style="width:20%"><col style="width:12%"></colgroup><thead><tr><th scope="col">'+(isReceipt?'Документ':'Заявка')+'</th><th scope="col">Машина / VIN</th><th scope="col">Запчасть</th><th scope="col">Кол-во</th><th scope="col">Состояние</th><th scope="col"><span class="sr-table-action">Действие</span></th></tr></thead><tbody>';
+ const requestStatuses={NEW:["В очереди","wait"],PREPARED:["Подготовлена","prepared"],ISSUED:["Выдана","issued"]};
+ for(const item of records){
+  const doc=item.document;
+  const status=isReceipt?(doc.confirmed?["Получение подтверждено","issued"]:["Нужно подтвердить получение","pending"]):requestStatuses[item.status];
+  const id=isReceipt?"В-"+doc.id:"З-"+item.id;
+  const date=isReceipt?doc.date:item.date;
+  const note=isReceipt?(doc.confirmed?"Документ завершён":"Запчасть выдана складом"):(item.stock||"Выдано полностью");
+  const stockClass=item.stock==="Недостаточно на складе"&&!isReceipt?" shortage":"";
+  markup+='<tr><td data-label="'+(isReceipt?'Документ':'Заявка')+'"><span class="record-number">'+id+'</span><span class="cell-sub">'+date+'</span>'+(isReceipt?'<span class="cell-sub">По заявке З-'+item.id+'</span>':'')+'</td><td data-label="Машина / VIN">'+item.car+'<span class="cell-sub">'+item.plate+'</span><span class="cell-sub vin">'+item.vin+'</span></td><td data-label="Запчасть"><span class="part-title">'+item.part+'</span><span class="cell-sub">Арт. '+item.article+'</span></td><td data-label="Количество" class="cell-qty">'+item.qty+' '+item.unit+'</td><td data-label="Состояние"><span class="request-status '+status[1]+'">'+status[0]+'</span><span class="stock-note'+stockClass+'">'+note+'</span></td><td data-label="Действие" class="action-cell"><button type="button" class="btn'+(isReceipt?' receipt-button':'')+'" data-record="'+(isReceipt?doc.id:item.id)+'" aria-label="'+(isReceipt?'Открыть документ ':'Открыть заявку ')+id+'">'+(isReceipt?'Открыть документ':'Открыть')+'</button></td></tr>';
+ }
+ markup+='</tbody></table>';
+ $("requests-content").innerHTML=markup;
+ $("requests-content").querySelectorAll("[data-record]").forEach(button=>button.addEventListener("click",()=>{
+  const id=button.dataset.record;
+  if(isReceipt)showTarget("Документ выдачи В-"+id,"Переход на экран 8: реквизиты выдачи, фактический получатель, состояние и подтверждение получения.");
+  else showTarget("Карточка заявки З-"+id,"Переход на экран 5: исходная потребность, наличие, состояние заявки и связанные документы.");
+ }));
+}
+function openNewRequest(){showTarget("Создание заявки","Переход на экран 3: машина и VIN, деталь из общей номенклатуры, количество и комментарий.");}
+function openCatalog(){showTarget("Общая номенклатура и наличие","Переход на экран 4: поиск по названию или артикулу, единицы измерения и остатки без цен.");}
+function routePreview(){
+ const raw=location.hash.replace(/^#/,"")||"/";
+ const path=raw.split("?")[0];
+ if(path==="/requests"){
+  const params=new URLSearchParams(raw.split("?")[1]||"");
+  const requested=params.get("participant");
+  if(["mechanic","driver"].includes(requested)){selected=requested;saveSelection();}
+ }
+ const isRequests=path==="/requests";
+ document.title=isRequests?"Отдел снабжения — мои заявки и получения":"Отдел снабжения — выбор участника";
+ $("start-screen").hidden=isRequests;$("requests-screen").hidden=!isRequests;
+ const p=participants.find(x=>x.id===selected);
+ $("header-participant").textContent=p?p.name+" · "+p.role:"";
+ if(isRequests)renderRequestList();else render();
+}
+$("requests-back").addEventListener("click",()=>{location.hash="/";});
+$("requests-new").addEventListener("click",openNewRequest);
+$("requests-catalog").addEventListener("click",openCatalog);
+$("requests-close-notice").addEventListener("click",()=>{$("requests-notice").hidden=true;$("requests-message").textContent="";});
+$("requests-participant").addEventListener("change",event=>{
+ const oldSelected=selected;selected=event.target.value;
+ if(!saveSelection()){selected=oldSelected;event.target.value=oldSelected;$("requests-message").textContent="Не удалось сохранить выбор участника. Повторите действие.";return;}
+ if(location.hash.includes("?")){location.hash="/requests";return;}
+ renderRequestList();$("header-participant").textContent=participants.find(p=>p.id===selected).name+" · "+participants.find(p=>p.id===selected).role;$("requests-message").textContent="Показаны записи выбранного участника.";
+});
+$("requests-state").addEventListener("change",event=>{requestsView=event.target.value;renderRequestList();$("requests-message").textContent="";});
+for(const [id,value] of [["tab-own","own"],["tab-receipts","receipts"]]){
+ $(id).addEventListener("click",()=>{requestsTab=value;renderRequestList();$("requests-message").textContent="";});
+ $(id).addEventListener("keydown",event=>{
+  if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+  event.preventDefault();requestsTab=event.key==="Home"?"own":event.key==="End"?"receipts":(requestsTab==="own"?"receipts":"own");renderRequestList();$(requestsTab==="own"?"tab-own":"tab-receipts").focus();
+ });
+}
+window.addEventListener("hashchange",routePreview);
+routePreview();
+
+</script>
+</body>
+</html>

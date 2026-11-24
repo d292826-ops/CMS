@@ -1,0 +1,473 @@
+{
+  "base": "http://127.0.0.1:4173",
+  "rows": 58,
+  "verified": 58,
+  "percentage": 100,
+  "results": [
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-3",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-4",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "baseline-november-2026",
+      "rowId": "finance-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-3",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-4",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "finance-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "expense-issue-prepared-example",
+      "kind": "ISSUE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "issued-price-changed",
+      "rowId": "expense-return-f82a73b1-ccbe-4bb7-96f6-8d5295c42081",
+      "kind": "RETURN",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-3",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-4",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "finance-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "expense-issue-prepared-example",
+      "kind": "ISSUE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "returned-december",
+      "rowId": "expense-return-december",
+      "kind": "RETURN",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-3",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-4",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "finance-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "unknown-price",
+      "rowId": "expense-issue-cf7a6047-5cdc-4735-bf48-8bee81a6aebe",
+      "kind": "ISSUE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "finance-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "finance-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "finance-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "finance-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "finance-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-1",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-2",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-3",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-4",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-5",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-6",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-7",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-8",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-9",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-10",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-11",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-12",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-13",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-14",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-15",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-16",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-17",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-18",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-19",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    },
+    {
+      "dataset": "twenty-lines",
+      "rowId": "fuel-line-20",
+      "kind": "SOURCE",
+      "source": true,
+      "print": true,
+      "unchanged": true
+    }
+  ],
+  "scope": "Подготовленные наборы, включая выдачу/возврат/неизвестную сумму/20строк; не сверка рабочих 1С"
+}
